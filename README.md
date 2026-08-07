@@ -1,2 +1,2 @@
-# The-Gym-Baby-Team
-Digital product offering 3 different coaching services 
+# Gym-Baby-Babes
+Digital product offering coaching services for Babes
