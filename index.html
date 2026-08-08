@@ -727,7 +727,7 @@
 
     <!-- APP STATE & LOGIC JS -->
     <script>
-        // Default Workout Database (5 Gym Days + 2 Active Rest Days)
+        // Default Workout Database with YouTube Search Phrases
         const workoutDatabase = {
             day1: {
                 title: "Glute & Hamstring Hypertrophy",
@@ -735,11 +735,11 @@
                 focus: "Glutes & Hamstrings Focus",
                 desc: "Barbell Hip Thrusts, RDLs, Bulgarian Split Squats. Focus on full extension and pelvic tuck at top lock.",
                 exercises: [
-                    { id: "e1_1", name: "Barbell Hip Thrust", sets: 4, reps: "10-12", rest: "90s", cue: "Pause 2s at top. Keep chin tucked and ribs down." },
-                    { id: "e1_2", name: "Romanian Deadlift (RDL)", sets: 3, reps: "10-12", rest: "75s", cue: "Hips back, soft knees. Stretch hamstrings to mid-shin." },
-                    { id: "e1_3", name: "Bulgarian Split Squat", sets: 3, reps: "10/leg", rest: "60s", cue: "Slight forward torso angle to bias glute max." },
-                    { id: "e1_4", name: "Smith Machine Goodmornings", sets: 3, reps: "12-15", rest: "60s", cue: "Hinge deeply at hips with flat spine, soft knee bend, and drive glutes back." },
-                    { id: "e1_5", name: "Standing Cable Glute Kickbacks", sets: 3, reps: "15/leg", rest: "45s", cue: "Squeeze outer glute, hips stay square." }
+                    { id: "e1_1", name: "Barbell Hip Thrust", sets: 4, reps: "10-12", rest: "90s", cue: "Pause 2s at top. Keep chin tucked and ribs down.", searchQuery: "Barbell Hip thrust" },
+                    { id: "e1_2", name: "Romanian Deadlift (RDL)", sets: 3, reps: "10-12", rest: "75s", cue: "Hips back, soft knees. Stretch hamstrings to mid-shin.", searchQuery: "Romanian Deadlift" },
+                    { id: "e1_3", name: "Bulgarian Split Squat", sets: 3, reps: "10/leg", rest: "60s", cue: "Slight forward torso angle to bias glute max.", searchQuery: "Bulgarian Split Squat" },
+                    { id: "e1_4", name: "Smith Machine Goodmornings", sets: 3, reps: "12-15", rest: "60s", cue: "Hinge deeply at hips with flat spine, soft knee bend, and drive glutes back.", searchQuery: "Smith Machine Goodmornings" },
+                    { id: "e1_5", name: "Standing Cable Glute Kickbacks", sets: 3, reps: "15/leg", rest: "45s", cue: "Squeeze outer glute, hips stay square.", searchQuery: "Standing Cable Glute Kickbacks" }
                 ]
             },
             day2: {
@@ -748,11 +748,11 @@
                 focus: "Shoulders, Back & Core Fusion",
                 desc: "Combine upper body strength with IFTA Mat Pilates core stabilization principles.",
                 exercises: [
-                    { id: "e2_1", name: "Dumbbell Overhead Shoulder Press", sets: 3, reps: "10-12", rest: "75s", cue: "Core tight, brace back against bench." },
-                    { id: "e2_2", name: "Lat Pulldown (Wide Grip)", sets: 3, reps: "10-12", rest: "60s", cue: "Drive elbows down to side pockets." },
-                    { id: "e2_3", name: "Incline Dumbbell Chest Press", sets: 3, reps: "12", rest: "60s", cue: "Scapulae retracted, control lower." },
-                    { id: "e2_4", name: "Dumbbell Lateral Raises", sets: 3, reps: "15", rest: "45s", cue: "Lead with elbows, soft knee bend." },
-                    { id: "e2_5", name: "IFTA Mat Pilates Core Series", sets: 3, reps: "45 sec each", rest: "45s", cue: "Single Leg Stretch, Criss-Cross, Teaser prep flow." }
+                    { id: "e2_1", name: "Dumbbell Overhead Shoulder Press", sets: 3, reps: "10-12", rest: "75s", cue: "Core tight, brace back against bench.", searchQuery: "Dumbbell Overhead Shoulder Press" },
+                    { id: "e2_2", name: "Lat Pulldown (Wide Grip)", sets: 3, reps: "10-12", rest: "60s", cue: "Drive elbows down to side pockets.", searchQuery: "Lat Pulldown Wide Grip" },
+                    { id: "e2_3", name: "Incline Dumbbell Chest Press", sets: 3, reps: "12", rest: "60s", cue: "Scapulae retracted, control lower.", searchQuery: "Incline Dumbbell Chest Press" },
+                    { id: "e2_4", name: "Dumbbell Lateral Raises", sets: 3, reps: "15", rest: "45s", cue: "Lead with elbows, soft knee bend.", searchQuery: "Dumbbell Lateral Raises" },
+                    { id: "e2_5", name: "IFTA Mat Pilates Core Series", sets: 3, reps: "45 sec each", rest: "45s", cue: "Single Leg Stretch, Criss-Cross, Teaser prep flow.", searchQuery: "Mat Pilates Core Workout" }
                 ]
             },
             day3: {
@@ -761,11 +761,11 @@
                 focus: "Quads & Lower Body Strength",
                 desc: "Heavy compound squats and leg press with wide stance for full lower body development.",
                 exercises: [
-                    { id: "e3_1", name: "Barbell or DB Goblet Squat", sets: 4, reps: "8-10", rest: "90s", cue: "Knees track over toes, drive through mid-foot." },
-                    { id: "e3_2", name: "Dumbbell Walking Lunges", sets: 3, reps: "12 steps/leg", rest: "75s", cue: "Constant tension, upright or slight lean." },
-                    { id: "e3_3", name: "Leg Press (High & Wide Footing)", sets: 3, reps: "12-15", rest: "75s", cue: "Deep ROM without pelvic tuck at bottom." },
-                    { id: "e3_4", name: "Dumbbell Sumo Deadlift", sets: 3, reps: "12", rest: "60s", cue: "Squeeze inner thighs and glutes at peak lock." },
-                    { id: "e3_5", name: "Standing Calf & Shin Raises", sets: 3, reps: "15-20", rest: "45s", cue: "Full stretch at bottom, 1s pause at top." }
+                    { id: "e3_1", name: "Barbell or DB Goblet Squat", sets: 4, reps: "8-10", rest: "90s", cue: "Knees track over toes, drive through mid-foot.", searchQuery: "Goblet Squat form" },
+                    { id: "e3_2", name: "Dumbbell Walking Lunges", sets: 3, reps: "12 steps/leg", rest: "75s", cue: "Constant tension, upright or slight lean.", searchQuery: "Dumbbell Walking Lunges" },
+                    { id: "e3_3", name: "Leg Press (High & Wide Footing)", sets: 3, reps: "12-15", rest: "75s", cue: "Deep ROM without pelvic tuck at bottom.", searchQuery: "Leg Press High and Wide" },
+                    { id: "e3_4", name: "Dumbbell Sumo Deadlift", sets: 3, reps: "12", rest: "60s", cue: "Squeeze inner thighs and glutes at peak lock.", searchQuery: "Dumbbell Sumo Deadlift" },
+                    { id: "e3_5", name: "Standing Calf & Shin Raises", sets: 3, reps: "15-20", rest: "45s", cue: "Full stretch at bottom, 1s pause at top.", searchQuery: "Standing Calf Raises" }
                 ]
             },
             day4: {
@@ -774,10 +774,10 @@
                 focus: "Mat Pilates & Active Recovery",
                 desc: "20-30 min Mat Pilates flow to align hip pelvis, restore spine mobility, and promote glute recovery.",
                 exercises: [
-                    { id: "e4_1", name: "Pilates Pelvic Clocks & Bridging", sets: 3, reps: "10 cycles", rest: "30s", cue: "Articulate spine vertebra by vertebra." },
-                    { id: "e4_2", name: "Cat-Cow to Thread The Needle", sets: 3, reps: "8/side", rest: "30s", cue: "Inhale expanding back ribs." },
-                    { id: "e4_3", name: "Hamstring & Hip Flexor Strapped Stretch", sets: 2, reps: "60 sec hold", rest: "30s", cue: "Relax breath, lengthen hamstrings." },
-                    { id: "e4_4", name: "Light Steps Walk", sets: 1, reps: "30 mins", rest: "N/A", cue: "Target 7,000-10,000 daily steps." }
+                    { id: "e4_1", name: "Pilates Pelvic Clocks & Bridging", sets: 3, reps: "10 cycles", rest: "30s", cue: "Articulate spine vertebra by vertebra.", searchQuery: "Pilates Pelvic Bridge" },
+                    { id: "e4_2", name: "Cat-Cow to Thread The Needle", sets: 3, reps: "8/side", rest: "30s", cue: "Inhale expanding back ribs.", searchQuery: "Cat Cow Thread The Needle Stretch" },
+                    { id: "e4_3", name: "Hamstring & Hip Flexor Strapped Stretch", sets: 2, reps: "60 sec hold", rest: "30s", cue: "Relax breath, lengthen hamstrings.", searchQuery: "Hamstring and Hip Flexor Stretch" },
+                    { id: "e4_4", name: "Light Steps Walk", sets: 1, reps: "30 mins", rest: "N/A", cue: "Target 7,000-10,000 daily steps.", searchQuery: "LISS Cardio Walking Workout" }
                 ]
             },
             day5: {
@@ -786,11 +786,11 @@
                 focus: "Full Body & Glute Volume",
                 desc: "High velocity full-body recomposition day targeting back, legs, and glute pump.",
                 exercises: [
-                    { id: "e5_1", name: "Cable Glute Pull-Throughs", sets: 4, reps: "12-15", rest: "60s", cue: "Hinge at hips, squeeze glutes hard at top." },
-                    { id: "e5_2", name: "Dumbbell Bent-Over Rows", sets: 3, reps: "12", rest: "60s", cue: "Flat back, pull dumbbells toward hip bones." },
-                    { id: "e5_3", name: "Push-ups (Standard or Knee Mod)", sets: 3, reps: "AMRAP", rest: "60s", cue: "Elbows at 45 degrees, glutes squeezed." },
-                    { id: "e5_4", name: "Cable Face Pulls", sets: 3, reps: "15", rest: "45s", cue: "Pull rope to forehead, exterior rotator focus." },
-                    { id: "e5_5", name: "Frog Pumps (Bodyweight/Weighted)", sets: 3, reps: "25-30", rest: "45s", cue: "Soles of feet together, drive hips up." }
+                    { id: "e5_1", name: "Cable Glute Pull-Throughs", sets: 4, reps: "12-15", rest: "60s", cue: "Hinge at hips, squeeze glutes hard at top.", searchQuery: "Cable Glute Pull Throughs" },
+                    { id: "e5_2", name: "Dumbbell Bent-Over Rows", sets: 3, reps: "12", rest: "60s", cue: "Flat back, pull dumbbells toward hip bones.", searchQuery: "Dumbbell Bent Over Row" },
+                    { id: "e5_3", name: "Push-ups (Standard or Knee Mod)", sets: 3, reps: "AMRAP", rest: "60s", cue: "Elbows at 45 degrees, glutes squeezed.", searchQuery: "Push ups form guide" },
+                    { id: "e5_4", name: "Cable Face Pulls", sets: 3, reps: "15", rest: "45s", cue: "Pull rope to forehead, exterior rotator focus.", searchQuery: "Cable Face Pulls" },
+                    { id: "e5_5", name: "Frog Pumps (Bodyweight/Weighted)", sets: 3, reps: "25-30", rest: "45s", cue: "Soles of feet together, drive hips up.", searchQuery: "Frog Pumps exercise" }
                 ]
             },
             day6: {
@@ -799,11 +799,11 @@
                 focus: "Posture & Upper Body Detail",
                 desc: "Detailing the upper back, rear delts, and arms for balanced aesthetic posture.",
                 exercises: [
-                    { id: "e6_1", name: "Seated Cable Rows (Neutral Grip)", sets: 3, reps: "12", rest: "60s", cue: "Keep shoulders down away from ears." },
-                    { id: "e6_2", name: "Dumbbell Arnold Press", sets: 3, reps: "12", rest: "60s", cue: "Rotate palms smooth from front to overhead." },
-                    { id: "e6_3", name: "Incline DB Bicep Curls", sets: 3, reps: "12-15", rest: "45s", cue: "Full stretch on bicep at bottom." },
-                    { id: "e6_4", name: "Cable Tricep Rope Pushdowns", sets: 3, reps: "15", rest: "45s", cue: "Lock elbows at sides, spread rope at bottom." },
-                    { id: "e6_5", name: "Pilates Plank Finisher", sets: 3, reps: "60 sec hold", rest: "45s", cue: "Navel to spine, tuck tailbone slightly." }
+                    { id: "e6_1", name: "Seated Cable Rows (Neutral Grip)", sets: 3, reps: "12", rest: "60s", cue: "Keep shoulders down away from ears.", searchQuery: "Seated Cable Row Neutral Grip" },
+                    { id: "e6_2", name: "Dumbbell Arnold Press", sets: 3, reps: "12", rest: "60s", cue: "Rotate palms smooth from front to overhead.", searchQuery: "Dumbbell Arnold Press" },
+                    { id: "e6_3", name: "Incline DB Bicep Curls", sets: 3, reps: "12-15", rest: "45s", cue: "Full stretch on bicep at bottom.", searchQuery: "Incline Dumbbell Bicep Curl" },
+                    { id: "e6_4", name: "Cable Tricep Rope Pushdowns", sets: 3, reps: "15", rest: "45s", cue: "Lock elbows at sides, spread rope at bottom.", searchQuery: "Cable Tricep Rope Pushdown" },
+                    { id: "e6_5", name: "Pilates Plank Finisher", sets: 3, reps: "60 sec hold", rest: "45s", cue: "Navel to spine, tuck tailbone slightly.", searchQuery: "Pilates Plank Form" }
                 ]
             },
             day7: {
@@ -812,9 +812,9 @@
                 focus: "Complete Rest & Prep",
                 desc: "Complete rest from heavy weights. Focus on hydration (80-100 oz), high-protein meal prep, and foam rolling.",
                 exercises: [
-                    { id: "e7_1", name: "Outdoor Walk & Sun Exposure", sets: 1, reps: "30-45 mins", rest: "N/A", cue: "Low intensity recovery zone." },
-                    { id: "e7_2", name: "Full Body Foam Rolling", sets: 1, reps: "15 mins", rest: "N/A", cue: "Roll quads, IT band, lats, and glutes." },
-                    { id: "e7_3", name: "High-Protein Meal Prep Audit", sets: 1, reps: "Check target", rest: "N/A", cue: "Prep verified high-protein meals for upcoming week." }
+                    { id: "e7_1", name: "Outdoor Walk & Sun Exposure", sets: 1, reps: "30-45 mins", rest: "N/A", cue: "Low intensity recovery zone.", searchQuery: "Recovery Walking Workout" },
+                    { id: "e7_2", name: "Full Body Foam Rolling", sets: 1, reps: "15 mins", rest: "N/A", cue: "Roll quads, IT band, lats, and glutes.", searchQuery: "Full Body Foam Rolling Routine" },
+                    { id: "e7_3", name: "High-Protein Meal Prep Audit", sets: 1, reps: "Check target", rest: "N/A", cue: "Prep verified high-protein meals for upcoming week.", searchQuery: "High Protein Meal Prep Ideas" }
                 ]
             }
         };
@@ -1083,6 +1083,8 @@
             dayData.exercises.forEach((ex, idx) => {
                 const logKey = `w${appState.currentWeek}_${ex.id}`;
                 const logVal = appState.workoutLogs[logKey] || { weight: '', reps: '' };
+                const searchPhrase = ex.searchQuery || ex.name;
+                const ytDemoUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(searchPhrase)}`;
 
                 const exCard = document.createElement('div');
                 exCard.className = "bg-slate-900/80 rounded-2xl p-5 border border-slate-800 space-y-3";
@@ -1090,7 +1092,13 @@
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
                         <div>
                             <span class="text-[11px] font-bold text-babypink-300 uppercase">Exercise ${idx + 1}</span>
-                            <h4 class="font-bold text-base text-white">${ex.name}</h4>
+                            <div class="flex items-center gap-2.5 flex-wrap">
+                                <h4 class="font-bold text-base text-white">${ex.name}</h4>
+                                <a href="${ytDemoUrl}" target="_blank" rel="noopener noreferrer" title="Search ${searchPhrase} on YouTube" class="inline-flex items-center gap-1.5 text-[11px] font-bold text-rose-300 hover:text-white bg-rose-500/10 hover:bg-rose-500/20 px-2.5 py-1 rounded-lg border border-rose-500/30 transition-all">
+                                    <i data-lucide="video" class="w-3.5 h-3.5 text-rose-400"></i>
+                                    <span>Watch Demo</span>
+                                </a>
+                            </div>
                         </div>
                         <div class="flex items-center space-x-3 text-xs text-slate-300">
                             <span class="bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-700"><strong>${ex.sets}</strong> Sets</span>
@@ -1099,9 +1107,12 @@
                         </div>
                     </div>
 
-                    <div class="text-xs text-slate-300 bg-slate-800/40 p-2.5 rounded-xl border border-slate-800/80 flex items-start gap-2">
-                        <i data-lucide="sparkles" class="w-4 h-4 text-babypink-300 flex-shrink-0 mt-0.5"></i>
-                        <span><strong>Insider Tips & Tricks:</strong> ${ex.cue}</span>
+                    <div class="text-xs text-slate-300 bg-slate-800/40 p-3 rounded-xl border border-slate-800/80 space-y-1.5">
+                        <div class="flex items-center gap-1.5 font-semibold text-babypink-300">
+                            <i data-lucide="search" class="w-3.5 h-3.5 text-babypink-300"></i>
+                            <span>Coach Note: <code class="bg-slate-800 px-2 py-0.5 rounded text-babypink-300 font-mono text-[11px] border border-slate-700">search:${searchPhrase}</code></span>
+                        </div>
+                        <div><strong>Insider Tips & Tricks:</strong> ${ex.cue}</div>
                     </div>
 
                     <!-- Input logging -->
