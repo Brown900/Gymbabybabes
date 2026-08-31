@@ -43,7 +43,8 @@
   <header class="border-b border-pink-500/20 bg-cardbg/80 backdrop-blur sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-full bg-pink-500/20 border border-pink-400/50 flex items-center justify-center text-pink-300 font-bold text-xl shadow-[0_0_15px_rgba(249,168,212,0.3)]">
+        <img src="g_logo.png" alt="The Gym Baby Logo" class="w-12 h-12 rounded-full border border-pink-400/50 object-cover shadow-[0_0_15px_rgba(249,168,212,0.3)]" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="w-10 h-10 rounded-full bg-pink-500/20 border border-pink-400/50 hidden items-center justify-center text-pink-300 font-bold text-xl shadow-[0_0_15px_rgba(249,168,212,0.3)]">
           G
         </div>
         <div>
@@ -134,8 +135,8 @@
           </div>
           <div class="bg-slate-900 border border-pink-500/20 rounded-lg p-3">
             <span class="text-xs text-pink-300 block">Current Week</span>
-            <span class="text-lg font-bold text-white">Week 1</span>
-            <span class="text-[10px] text-slate-400 block">In Progress</span>
+            <span class="text-lg font-bold text-white" id="stat-current-week">Week 1</span>
+            <span class="text-[10px] text-slate-400 block" id="stat-days-active">Day 1 Active</span>
           </div>
           <div class="bg-slate-900 border border-pink-500/20 rounded-lg p-3">
             <span class="text-xs text-pink-300 block">Program Structure</span>
@@ -144,92 +145,25 @@
           </div>
         </div>
 
-        <!-- Weekly Selector -->
-        <div class="flex gap-2 mb-6">
-          <button class="bg-pink-400 text-slate-950 text-xs font-bold px-4 py-2 rounded-lg">Week 1</button>
-          <button class="bg-slate-900 text-slate-400 text-xs font-bold px-4 py-2 rounded-lg border border-pink-500/10 cursor-not-allowed" disabled>Week 2 (Locked)</button>
-          <button class="bg-slate-900 text-slate-400 text-xs font-bold px-4 py-2 rounded-lg border border-pink-500/10 cursor-not-allowed" disabled>Week 3 (Locked)</button>
-          <button class="bg-slate-900 text-slate-400 text-xs font-bold px-4 py-2 rounded-lg border border-pink-500/10 cursor-not-allowed" disabled>Week 4 (Locked)</button>
+        <!-- Weekly Drip-Unlock Selector -->
+        <div class="flex flex-wrap gap-2 mb-6" id="week-selector-container">
+          <button id="btn-week-1" onclick="selectWeek(1)" class="bg-pink-400 text-slate-950 text-xs font-bold px-4 py-2 rounded-lg transition">
+            Week 1
+          </button>
+          <button id="btn-week-2" onclick="selectWeek(2)" class="bg-slate-900 text-slate-400 text-xs font-bold px-4 py-2 rounded-lg border border-pink-500/10 cursor-not-allowed transition" disabled>
+            <i class="fa-solid fa-lock mr-1"></i> Week 2 (Locked)
+          </button>
+          <button id="btn-week-3" onclick="selectWeek(3)" class="bg-slate-900 text-slate-400 text-xs font-bold px-4 py-2 rounded-lg border border-pink-500/10 cursor-not-allowed transition" disabled>
+            <i class="fa-solid fa-lock mr-1"></i> Week 3 (Locked)
+          </button>
+          <button id="btn-week-4" onclick="selectWeek(4)" class="bg-slate-900 text-slate-400 text-xs font-bold px-4 py-2 rounded-lg border border-pink-500/10 cursor-not-allowed transition" disabled>
+            <i class="fa-solid fa-lock mr-1"></i> Week 4 (Locked)
+          </button>
         </div>
 
-        <!-- Exercise Card (Example Day 1) -->
-        <div class="bg-slate-900 border border-pink-500/20 rounded-xl p-4 space-y-4">
-          <div class="flex justify-between items-center border-b border-pink-500/10 pb-3">
-            <div>
-              <span class="text-xs text-pink-300 font-bold uppercase">Day 1 • Gym Day</span>
-              <h3 class="text-lg font-bold text-white">Glute & Hamstring Hypertrophy</h3>
-            </div>
-            <span class="text-xs bg-pink-500/20 text-pink-300 px-3 py-1 rounded-full border border-pink-400/30">Target: Glutes & Hamstrings</span>
-          </div>
-          <p class="text-xs text-slate-400">Focus on maximum glute activation, chin tucked on hip thrusts, and controlled eccentric tempo on RDLs.</p>
-
-          <!-- Exercise 1 -->
-          <div class="bg-cardbg rounded-lg p-3 border border-pink-500/10 space-y-2">
-            <div class="flex justify-between items-start">
-              <div>
-                <h4 class="font-semibold text-pink-300 text-sm">1. Barbell Hip Thrust</h4>
-                <p class="text-xs text-slate-400">4 Sets x 10-12 Reps | Tempo: 3-1-1</p>
-              </div>
-              <a href="https://www.youtube.com/results?search_query=Barbell+Hip+thrust" target="_blank" class="text-xs bg-pink-500/20 text-pink-300 border border-pink-400/30 px-2 py-1 rounded hover:bg-pink-500/30 transition flex items-center gap-1">
-                <i class="fa-brands fa-youtube text-red-400"></i> Watch Demo
-              </a>
-            </div>
-            <div class="bg-slate-900/60 p-2 rounded text-[11px] text-pink-200/90 border border-pink-500/10">
-              <span class="font-bold text-pink-300">Insider Tips & Tricks:</span> Keep chin tucked toward chest, pelvic neutral, squeeze glutes at top without hyperextending back. <br>
-              <span class="font-semibold text-slate-400">Coach Note:</span> search: Barbell Hip thrust
-            </div>
-          </div>
-
-          <!-- Exercise 2 -->
-          <div class="bg-cardbg rounded-lg p-3 border border-pink-500/10 space-y-2">
-            <div class="flex justify-between items-start">
-              <div>
-                <h4 class="font-semibold text-pink-300 text-sm">2. Romanian Deadlift (RDL)</h4>
-                <p class="text-xs text-slate-400">3 Sets x 10-12 Reps | Tempo: 3-1-1</p>
-              </div>
-              <a href="https://www.youtube.com/results?search_query=Romanian+Deadlift" target="_blank" class="text-xs bg-pink-500/20 text-pink-300 border border-pink-400/30 px-2 py-1 rounded hover:bg-pink-500/30 transition flex items-center gap-1">
-                <i class="fa-brands fa-youtube text-red-400"></i> Watch Demo
-              </a>
-            </div>
-            <div class="bg-slate-900/60 p-2 rounded text-[11px] text-pink-200/90 border border-pink-500/10">
-              <span class="font-bold text-pink-300">Insider Tips & Tricks:</span> Soft bend in knees, hinge hips straight back, keep lats engaged and bar close to shins. <br>
-              <span class="font-semibold text-slate-400">Coach Note:</span> search: Romanian Deadlift
-            </div>
-          </div>
-
-          <!-- Exercise 3 -->
-          <div class="bg-cardbg rounded-lg p-3 border border-pink-500/10 space-y-2">
-            <div class="flex justify-between items-start">
-              <div>
-                <h4 class="font-semibold text-pink-300 text-sm">3. Bulgarian Split Squat</h4>
-                <p class="text-xs text-slate-400">3 Sets x 8-10 Reps per leg</p>
-              </div>
-              <a href="https://www.youtube.com/results?search_query=Bulgarian+Split+Squat" target="_blank" class="text-xs bg-pink-500/20 text-pink-300 border border-pink-400/30 px-2 py-1 rounded hover:bg-pink-500/30 transition flex items-center gap-1">
-                <i class="fa-brands fa-youtube text-red-400"></i> Watch Demo
-              </a>
-            </div>
-            <div class="bg-slate-900/60 p-2 rounded text-[11px] text-pink-200/90 border border-pink-500/10">
-              <span class="font-bold text-pink-300">Insider Tips & Tricks:</span> Slight forward torso lean to target glute max; drive through front heel. <br>
-              <span class="font-semibold text-slate-400">Coach Note:</span> search: Bulgarian Split Squat
-            </div>
-          </div>
-
-          <!-- Exercise 4 (Updated) -->
-          <div class="bg-cardbg rounded-lg p-3 border border-pink-500/10 space-y-2">
-            <div class="flex justify-between items-start">
-              <div>
-                <h4 class="font-semibold text-pink-300 text-sm">4. Smith Machine Goodmornings</h4>
-                <p class="text-xs text-slate-400">3 Sets x 12 Reps | Controlled Tempo</p>
-              </div>
-              <a href="https://www.youtube.com/results?search_query=Smith+machine+goodmornings" target="_blank" class="text-xs bg-pink-500/20 text-pink-300 border border-pink-400/30 px-2 py-1 rounded hover:bg-pink-500/30 transition flex items-center gap-1">
-                <i class="fa-brands fa-youtube text-red-400"></i> Watch Demo
-              </a>
-            </div>
-            <div class="bg-slate-900/60 p-2 rounded text-[11px] text-pink-200/90 border border-pink-500/10">
-              <span class="font-bold text-pink-300">Insider Tips & Tricks:</span> Brace core tightly, hinge at the hips while maintaining a flat back, and squeeze glutes at top. <br>
-              <span class="font-semibold text-slate-400">Coach Note:</span> search: Smith machine goodmornings
-            </div>
-          </div>
+        <!-- Dynamic Workout Display Area -->
+        <div id="workout-display-container" class="space-y-4">
+          <!-- Populated by JavaScript -->
         </div>
       </div>
     </div>
@@ -248,7 +182,6 @@
               <input type="number" id="calc-weight" value="140" class="w-full bg-slate-800 border border-pink-500/30 rounded-lg p-2 text-white focus:outline-none focus:border-pink-400" onchange="calculateMacros()">
             </div>
 
-            <!-- NEW HEIGHT INPUT -->
             <div>
               <label class="block text-sm font-medium text-pink-300 mb-1">Height (Total Inches)</label>
               <input type="number" id="calc-height" value="65" placeholder="e.g. 65 (5'5&quot;)" class="w-full bg-slate-800 border border-pink-500/30 rounded-lg p-2 text-white focus:outline-none focus:border-pink-400" onchange="calculateMacros()">
@@ -338,6 +271,9 @@
               <li>• Low-Fat Cottage Cheese (14g / 1/2 cup)</li>
               <li>• Wild Salmon / Tuna (28g / 4oz)</li>
               <li>• Whey / Plant Isolate (24-30g / scoop)</li>
+              <li>• Shrimp (24g / 4oz)</li>
+              <li>• Fairlife Ultra-Filtered Milk (13g / 1 cup)</li>
+              <li>• Edamame (17g / 1 cup)</li>
             </ul>
           </div>
           <div class="bg-slate-900 p-4 rounded-lg border border-pink-500/10">
@@ -349,6 +285,9 @@
               <li>• Jasmine / Brown Rice (45g / 1 cup)</li>
               <li>• Black / Pinto Beans (40g / 1 cup)</li>
               <li>• High-Fiber Tortillas (18g / wrap)</li>
+              <li>• Berries (15g / 1 cup)</li>
+              <li>• Bananas (27g / medium)</li>
+              <li>• Ezekiel Whole Grain Bread (15g / slice)</li>
             </ul>
           </div>
           <div class="bg-slate-900 p-4 rounded-lg border border-pink-500/10">
@@ -359,6 +298,9 @@
               <li>• Almonds / Walnuts (14g / 1 oz)</li>
               <li>• Natural Peanut Butter (16g / 2 tbsp)</li>
               <li>• Chia / Flax Seeds (9g / 2 tbsp)</li>
+              <li>• Pumpkin Seeds (13g / 1 oz)</li>
+              <li>• Dark Chocolate 85%+ (12g / 1 oz)</li>
+              <li>• Grass-fed Butter / Ghee (12g / 1 tbsp)</li>
             </ul>
           </div>
         </div>
@@ -430,7 +372,7 @@
       calculateMacros();
     }
 
-    // UPDATED MACRO CALCULATOR WITH HEIGHT FACTOR
+    // MACRO CALCULATOR
     function calculateMacros() {
       const weightLbs = parseFloat(document.getElementById('calc-weight').value) || 140;
       const heightInches = parseFloat(document.getElementById('calc-height').value) || 65;
@@ -438,11 +380,9 @@
       const activityMultiplier = parseFloat(document.getElementById('calc-activity').value) || 1.375;
       const goal = document.getElementById('calc-goal').value;
 
-      // Imperial to Metric conversion
       const weightKg = weightLbs * 0.453592;
       const heightCm = heightInches * 2.54;
 
-      // Mifflin-St Jeor (Female standard baseline)
       const bmr = (10 * weightKg) + (6.25 * heightCm) - (5 * age) - 161;
       let tdee = bmr * activityMultiplier;
 
@@ -451,7 +391,7 @@
 
       if (goal === 'fat-loss') {
         targetCalories = tdee - 400;
-        proteinPerLb = 1.1; // Increased protein in deficit
+        proteinPerLb = 1.1;
       } else {
         targetCalories = tdee;
         proteinPerLb = 1.0;
@@ -466,7 +406,6 @@
       const carbCalories = targetCalories - (proteinCalories + fatCalories);
       const carbGrams = Math.round(carbCalories / 4);
 
-      // UI Update
       document.getElementById('target-protein').innerText = proteinGrams + 'g';
       document.getElementById('target-carbs').innerText = carbGrams + 'g';
       document.getElementById('target-fats').innerText = fatGrams + 'g';
@@ -507,9 +446,168 @@
       }
     }
 
+    // -------------------------------------------------------------
+    // OPTION 2: DRIP UNLOCK / TIMER LOGIC
+    // -------------------------------------------------------------
+    const workoutData = {
+      1: {
+        title: "Glute & Hamstring Hypertrophy",
+        tag: "Target: Glutes & Hamstrings",
+        note: "Focus on maximum glute activation, chin tucked on hip thrusts, and controlled eccentric tempo on RDLs.",
+        exercises: [
+          { name: "1. Barbell Hip Thrust", details: "4 Sets x 10-12 Reps | Tempo: 3-1-1", cue: "Keep chin tucked toward chest, pelvic neutral, squeeze glutes at top without hyperextending back.", search: "Barbell Hip thrust" },
+          { name: "2. Romanian Deadlift (RDL)", details: "3 Sets x 10-12 Reps | Tempo: 3-1-1", cue: "Soft bend in knees, hinge hips straight back, keep lats engaged and bar close to shins.", search: "Romanian Deadlift" },
+          { name: "3. Bulgarian Split Squat", details: "3 Sets x 8-10 Reps per leg", cue: "Slight forward torso lean to target glute max; drive through front heel.", search: "Bulgarian Split Squat" },
+          { name: "4. Smith Machine Goodmornings", details: "3 Sets x 12 Reps | Controlled Tempo", cue: "Brace core tightly, hinge at the hips while maintaining a flat back, and squeeze glutes at top.", search: "Smith machine goodmornings" }
+        ]
+      },
+      2: {
+        title: "Upper Body Sculpt & Pilates Core",
+        tag: "Target: Shoulders, Back & Core",
+        note: "Build a strong upper back to exaggerate the waist-to-hip ratio, paired with deep transverse abdominis engagement.",
+        exercises: [
+          { name: "1. Dumbbell Shoulder Press", details: "4 Sets x 10-12 Reps", cue: "Keep elbows slightly turned inward, core brace tightly, lower dumbbells to ear level.", search: "Dumbbell Shoulder Press" },
+          { name: "2. Lat Pulldown", details: "3 Sets x 10-12 Reps", cue: "Drive elbows down toward hip pockets; squeeze lower lats at bottom.", search: "Lat Pulldown" },
+          { name: "3. Seated Cable Row", details: "3 Sets x 12 Reps", cue: "Pull handle to belly button, squeeze shoulder blades together without shrugging.", search: "Seated Cable Row" },
+          { name: "4. Mat Pilates Core Circuit (Toe Taps & Hundred)", details: "3 Sets x 45 Secs Each", cue: "Imprint lower back into mat, exhale forcefully to engage deep core.", search: "Pilates Toe Taps and Hundred" }
+        ]
+      },
+      3: {
+        title: "Quads & Glute Hypertrophy Focus",
+        tag: "Target: Quads & Lower Body",
+        note: "Prioritize quad depth and glute shelf build with slow, controlled lowering phases.",
+        exercises: [
+          { name: "1. Barbell Back Squat / Goblet Squat", details: "4 Sets x 8-10 Reps", cue: "Push knees outward in line with toes, maintain flat back and break 90-degree parallel.", search: "Barbell Back Squat" },
+          { name: "2. Dumbbell Walking Lunges", details: "3 Sets x 12 Reps per leg", cue: "Take long strides for glute focus or shorter strides for quad bias.", search: "Dumbbell Walking Lunges" },
+          { name: "3. Leg Press (High & Wide Stance)", details: "3 Sets x 12-15 Reps", cue: "High/wide foot placement targets glutes and hamstrings; avoid locking knees at top.", search: "Leg Press high wide stance" },
+          { name: "4. Cable Glute Kickbacks", details: "3 Sets x 15 Reps per leg", cue: "Keep torso steady, squeeze glute at top extension without swinging upper body.", search: "Cable Glute Kickbacks" }
+        ]
+      },
+      4: {
+        title: "Full Body Recomp & Active Recovery",
+        tag: "Target: Full Body & Active Rest",
+        note: "Focus on mind-muscle connection, mobility work, and hitting progressive overload on key lifts.",
+        exercises: [
+          { name: "1. Cable Pull-Throughs", details: "4 Sets x 12-15 Reps", cue: "Hinge hips straight back toward cable anchor, snap hips forward at peak squeeze.", search: "Cable Pull Throughs" },
+          { name: "2. Single-Arm Dumbbell Row", details: "3 Sets x 10-12 Reps per arm", cue: "Pull elbow toward hip pocket, keep hips square to bench.", search: "Single Arm Dumbbell Row" },
+          { name: "3. Arnold Press", details: "3 Sets x 10-12 Reps", cue: "Rotate palms from facing you at bottom to facing out at full overhead extension.", search: "Arnold Press" },
+          { name: "4. Mat Pilates Mobility & Pelvic Alignment", details: "20 Mins Mobility Flow", cue: "Perform pelvic tilts, cat-cow, and hip openers for glute recovery.", search: "Mat Pilates Mobility Flow" }
+        ]
+      }
+    };
+
+    function initDripLockSystem() {
+      let startDateStr = localStorage.getItem('gymbaby_start_date');
+      if (!startDateStr) {
+        startDateStr = new Date().toISOString();
+        localStorage.setItem('gymbaby_start_date', startDateStr);
+      }
+
+      const startDate = new Date(startDateStr);
+      const today = new Date();
+      const diffTime = Math.abs(today - startDate);
+      const activeDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+      // Calculate accessible weeks based on active days
+      const weekUnlocks = {
+        1: true,                     // Week 1 unlocked on Day 1
+        2: activeDays >= 8,          // Week 2 unlocks on Day 8
+        3: activeDays >= 15,         // Week 3 unlocks on Day 15
+        4: activeDays >= 22          // Week 4 unlocks on Day 22
+      };
+
+      // Determine highest available week to highlight
+      let highestWeek = 1;
+      for (let w = 4; w >= 1; w--) {
+        if (weekUnlocks[w]) {
+          highestWeek = w;
+          break;
+        }
+      }
+
+      // Update UI Header Stats
+      document.getElementById('stat-current-week').innerText = 'Week ' + highestWeek;
+      document.getElementById('stat-days-active').innerText = 'Day ' + activeDays + ' Active';
+
+      // Update Button States
+      for (let w = 1; w <= 4; w++) {
+        const btn = document.getElementById('btn-week-' + w);
+        if (weekUnlocks[w]) {
+          btn.disabled = false;
+          btn.classList.remove('cursor-not-allowed', 'opacity-50');
+          btn.innerText = 'Week ' + w;
+          if (w === 1) {
+            btn.className = "bg-pink-400 text-slate-950 text-xs font-bold px-4 py-2 rounded-lg transition cursor-pointer";
+          } else {
+            btn.className = "bg-slate-900 text-pink-300 border border-pink-400/50 text-xs font-bold px-4 py-2 rounded-lg transition hover:bg-pink-500/20 cursor-pointer";
+          }
+        } else {
+          btn.disabled = true;
+          let daysLeft = (w === 2 ? 8 : w === 3 ? 15 : 22) - activeDays;
+          btn.innerHTML = `<i class="fa-solid fa-lock mr-1"></i> Week ${w} (${daysLeft}d left)`;
+          btn.className = "bg-slate-900 text-slate-500 text-xs font-bold px-4 py-2 rounded-lg border border-pink-500/10 cursor-not-allowed opacity-60";
+        }
+      }
+
+      selectWeek(1);
+    }
+
+    function selectWeek(weekNum) {
+      // Highlight selected button
+      for (let w = 1; w <= 4; w++) {
+        const btn = document.getElementById('btn-week-' + w);
+        if (!btn.disabled) {
+          if (w === weekNum) {
+            btn.className = "bg-pink-400 text-slate-950 text-xs font-bold px-4 py-2 rounded-lg transition cursor-pointer";
+          } else {
+            btn.className = "bg-slate-900 text-pink-300 border border-pink-400/50 text-xs font-bold px-4 py-2 rounded-lg transition hover:bg-pink-500/20 cursor-pointer";
+          }
+        }
+      }
+
+      const data = workoutData[weekNum] || workoutData[1];
+      const container = document.getElementById('workout-display-container');
+
+      let exercisesHtml = '';
+      data.exercises.forEach(ex => {
+        exercisesHtml += `
+          <div class="bg-cardbg rounded-lg p-3 border border-pink-500/10 space-y-2">
+            <div class="flex justify-between items-start">
+              <div>
+                <h4 class="font-semibold text-pink-300 text-sm">${ex.name}</h4>
+                <p class="text-xs text-slate-400">${ex.details}</p>
+              </div>
+              <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(ex.search)}" target="_blank" class="text-xs bg-pink-500/20 text-pink-300 border border-pink-400/30 px-2 py-1 rounded hover:bg-pink-500/30 transition flex items-center gap-1">
+                <i class="fa-brands fa-youtube text-red-400"></i> Watch Demo
+              </a>
+            </div>
+            <div class="bg-slate-900/60 p-2 rounded text-[11px] text-pink-200/90 border border-pink-500/10">
+              <span class="font-bold text-pink-300">Insider Tips & Tricks:</span> ${ex.cue} <br>
+              <span class="font-semibold text-slate-400">Coach Note:</span> search: ${ex.search}
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = `
+        <div class="bg-slate-900 border border-pink-500/20 rounded-xl p-4 space-y-4">
+          <div class="flex justify-between items-center border-b border-pink-500/10 pb-3">
+            <div>
+              <span class="text-xs text-pink-300 font-bold uppercase">Week ${weekNum} • Gym Day</span>
+              <h3 class="text-lg font-bold text-white">${data.title}</h3>
+            </div>
+            <span class="text-xs bg-pink-500/20 text-pink-300 px-3 py-1 rounded-full border border-pink-400/30">${data.tag}</span>
+          </div>
+          <p class="text-xs text-slate-400">${data.note}</p>
+          ${exercisesHtml}
+        </div>
+      `;
+    }
+
     // Chart.js Init
     window.onload = function() {
       calculateMacros();
+      initDripLockSystem();
 
       const ctx = document.getElementById('recompChart').getContext('2d');
       new Chart(ctx, {
