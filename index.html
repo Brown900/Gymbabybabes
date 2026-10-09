@@ -1,245 +1,652 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Gym Baby - The Babes Guide</title>
-  
-  <!-- Open Graph / Link Preview Tags -->
-  <meta property="og:title" content="The Gym Baby - The Babes Guide">
-  <meta property="og:description" content="4-Week Recomp Blueprint with CPT Hypertrophy & Pilates Core Precision.">
-  <meta property="og:image" content="https://ashley3428.github.io/Gymbabybabes/preview.png">
-  <meta property="og:url" content="https://ashley3428.github.io/Gymbabybabes/">
-  <meta property="og:type" content="website">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Gym Baby - The Babes Guide</title>
+  
+  <!-- Open Graph / Link Preview Tags -->
+  <meta property="og:title" content="The Gym Baby - The Babes Guide">
+  <meta property="og:description" content="4-Week Recomp Blueprint with CPT Hypertrophy & Pilates Core Precision.">
+  <meta property="og:image" content="https://ashley3428.github.io/Gymbabybabes/preview.png">
+  <meta property="og:url" content="https://ashley3428.github.io/Gymbabybabes/">
+  <meta property="og:type" content="website">
 
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Chart.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- FontAwesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            babypink: {
-              300: '#fbcfe8',
-              400: '#f9a8d4',
-              500: '#f472b6',
-            },
-            slatebg: '#090d16',
-            cardbg: '#0f172a'
-          }
-        }
-      }
-    }
-  </script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            babypink: {
+              300: '#fbcfe8',
+              400: '#f9a8d4',
+              500: '#f472b6',
+            },
+            slatebg: '#090d16',
+            cardbg: '#0f172a'
+          }
+        }
+      }
+    }
+  </script>
 </head>
 <body class="bg-slatebg text-slate-100 font-sans min-h-screen pb-12">
 
-  <!-- Header / Navigation -->
-  <header class="border-b border-pink-500/20 bg-cardbg/80 backdrop-blur sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
-      <div class="flex items-center gap-3">
-        <img src="g_logo.png" alt="The Gym Baby Logo" class="w-12 h-12 rounded-full border border-pink-400/50 object-cover shadow-[0_0_15px_rgba(249,168,212,0.3)]" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="w-10 h-10 rounded-full bg-pink-500/20 border border-pink-400/50 hidden items-center justify-center text-pink-300 font-bold text-xl shadow-[0_0_15px_rgba(249,168,212,0.3)]">
-          G
-        </div>
-        <div>
-          <h1 class="text-2xl font-black tracking-wider text-white flex items-center gap-2">
-            THE GYM BABY
-            <span class="text-xs bg-pink-500/20 text-pink-300 px-2 py-0.5 rounded-full border border-pink-400/30 font-normal">
-              The Babes Guide
-            </span>
-          </h1>
-          <p class="text-xs text-pink-300/80">NASM CPT & Pilates Certified</p>
-        </div>
-      </div>
+  <!-- Header / Navigation -->
+  <header class="border-b border-pink-500/20 bg-cardbg/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <img src="g_logo.png" alt="The Gym Baby Logo" class="w-12 h-12 rounded-full border border-pink-400/50 object-cover shadow-[0_0_15px_rgba(249,168,212,0.3)]" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="w-10 h-10 rounded-full bg-pink-500/20 border border-pink-400/50 hidden items-center justify-center text-pink-300 font-bold text-xl shadow-[0_0_15px_rgba(249,168,212,0.3)]">
+          G
+        </div>
+        <div>
+          <h1 class="text-2xl font-black tracking-wider text-white flex items-center gap-2">
+            THE GYM BABY
+            <span class="text-xs bg-pink-500/20 text-pink-300 px-2 py-0.5 rounded-full border border-pink-400/30 font-normal">
+              The Babes Guide
+            </span>
+          </h1>
+          <p class="text-xs text-pink-300/80">NASM CPT & Pilates Certified</p>
+        </div>
+      </div>
 
-      <div class="flex items-center gap-4">
-        <!-- Goal Switcher -->
-        <div class="flex items-center gap-2 bg-slate-900 border border-pink-500/30 rounded-lg p-1.5">
-          <label for="header-goal" class="text-xs font-semibold text-pink-300">Goal:</label>
-          <select id="header-goal" class="bg-transparent text-sm text-white focus:outline-none cursor-pointer" onchange="syncGoal(this.value)">
-            <option value="recomp" class="bg-slate-900 text-white">Enhance the Curves- Body Recomp</option>
-            <option value="fat-loss" class="bg-slate-900 text-white">Slim Down Shred- Fat Loss</option>
-          </select>
-        </div>
+      <div class="flex items-center gap-4">
+        <!-- Goal Switcher -->
+        <div class="flex items-center gap-2 bg-slate-900 border border-pink-500/30 rounded-lg p-1.5">
+          <label for="header-goal" class="text-xs font-semibold text-pink-300">Goal:</label>
+          <select id="header-goal" class="bg-transparent text-sm text-white focus:outline-none cursor-pointer" onchange="syncGoal(this.value)">
+            <option value="recomp" class="bg-slate-900 text-white">Enhance the Curves- Body Recomp</option>
+            <option value="fat-loss" class="bg-slate-900 text-white">Slim Down Shred- Fat Loss</option>
+          </select>
+        </div>
 
-        <!-- Intentional Breath Moment Widget -->
-        <div class="flex items-center gap-2 bg-pink-500/10 border border-pink-400/30 px-3 py-1.5 rounded-lg">
-          <i class="fa-solid fa-wind text-pink-300"></i>
-          <span class="text-xs text-pink-200 font-medium">Intentional Breath Moment</span>
-          <span id="timer-display" class="font-mono text-sm font-bold text-pink-300">00:00</span>
-          <button onclick="toggleTimer()" id="timer-btn" class="text-xs bg-pink-400 hover:bg-pink-300 text-slate-950 font-bold px-2 py-0.5 rounded transition">
-            Start
-          </button>
-        </div>
-      </div>
-    </div>
-  </header>
+        <!-- Intentional Breath Moment Widget -->
+        <div class="flex items-center gap-2 bg-pink-500/10 border border-pink-400/30 px-3 py-1.5 rounded-lg">
+          <i class="fa-solid fa-wind text-pink-300"></i>
+          <span class="text-xs text-pink-200 font-medium">Intentional Breath Moment</span>
+          <span id="timer-display" class="font-mono text-sm font-bold text-pink-300">00:00</span>
+          <button onclick="toggleTimer()" id="timer-btn" class="text-xs bg-pink-400 hover:bg-pink-300 text-slate-950 font-bold px-2 py-0.5 rounded transition">
+            Start
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
 
-  <main class="max-w-7xl mx-auto px-4 mt-8 space-y-8">
-    
-    <!-- Coach Breath Note -->
-    <div class="bg-pink-500/10 border border-pink-400/30 rounded-xl p-4 flex items-start gap-3">
-      <i class="fa-solid fa-heart-pulse text-pink-300 text-xl mt-0.5"></i>
-      <div>
-        <h4 class="text-sm font-bold text-pink-300 uppercase tracking-wider">Coach Note</h4>
-        <p class="text-xs text-slate-300 mt-1">
-          Use this intentional pause to center your mind. Deep, conscious breathing grounds us, regulates cortisol levels, and helps us move through daily stressors with intention and grace.
-        </p>
-      </div>
-    </div>
+  <main class="max-w-7xl mx-auto px-4 mt-8 space-y-8">
+    
+    <!-- Coach Breath Note -->
+    <div class="bg-pink-500/10 border border-pink-400/30 rounded-xl p-4 flex items-start gap-3">
+      <i class="fa-solid fa-heart-pulse text-pink-300 text-xl mt-0.5"></i>
+      <div>
+        <h4 class="text-sm font-bold text-pink-300 uppercase tracking-wider">Coach Note</h4>
+        <p class="text-xs text-slate-300 mt-1">
+          Use this intentional pause to center your mind. Deep, conscious breathing grounds us, regulates cortisol levels, and helps us move through daily stressors with intention and grace.
+        </p>
+      </div>
+    </div>
 
-    <!-- Navigation Tabs -->
-    <div class="flex flex-wrap border-b border-pink-500/20 gap-2">
-      <button onclick="switchTab('workout')" id="tab-workout" class="tab-btn active border-b-2 border-pink-400 text-pink-300 font-semibold px-4 py-2 text-sm">
-        <i class="fa-solid fa-dumbbell mr-1"></i> 4-Week Blueprint
-      </button>
-      <button onclick="switchTab('macro')" id="tab-macro" class="tab-btn text-slate-400 hover:text-pink-300 font-semibold px-4 py-2 text-sm">
-        <i class="fa-solid fa-calculator mr-1"></i> Macro Calculator
-      </button>
-      <button onclick="switchTab('nutrition')" id="tab-nutrition" class="tab-btn text-slate-400 hover:text-pink-300 font-semibold px-4 py-2 text-sm">
-        <i class="fa-solid fa-utensils mr-1"></i> Nutrition
-      </button>
-      <button onclick="switchTab('progress')" id="tab-progress" class="tab-btn text-slate-400 hover:text-pink-300 font-semibold px-4 py-2 text-sm">
-        <i class="fa-solid fa-chart-line mr-1"></i> Progress & Analytics
-      </button>
-      <button onclick="switchTab('cues')" id="tab-cues" class="tab-btn text-slate-400 hover:text-pink-300 font-semibold px-4 py-2 text-sm">
-        <i class="fa-solid fa-lightbulb mr-1"></i> Insider Tips & Tricks
-      </button>
-    </div>
+    <!-- Navigation Tabs -->
+    <div class="flex flex-wrap border-b border-pink-500/20 gap-2">
+      <button onclick="switchTab('workout')" id="tab-workout" class="tab-btn active border-b-2 border-pink-400 text-pink-300 font-semibold px-4 py-2 text-sm">
+        <i class="fa-solid fa-dumbbell mr-1"></i> 4-Week Blueprint
+      </button>
+      <button onclick="switchTab('macro')" id="tab-macro" class="tab-btn text-slate-400 hover:text-pink-300 font-semibold px-4 py-2 text-sm">
+        <i class="fa-solid fa-calculator mr-1"></i> Macro Calculator
+      </button>
+      <button onclick="switchTab('nutrition')" id="tab-nutrition" class="tab-btn text-slate-400 hover:text-pink-300 font-semibold px-4 py-2 text-sm">
+        <i class="fa-solid fa-utensils mr-1"></i> Nutrition
+      </button>
+      <button onclick="switchTab('progress')" id="tab-progress" class="tab-btn text-slate-400 hover:text-pink-300 font-semibold px-4 py-2 text-sm">
+        <i class="fa-solid fa-chart-line mr-1"></i> Progress & Analytics
+      </button>
+      <button onclick="switchTab('cues')" id="tab-cues" class="tab-btn text-slate-400 hover:text-pink-300 font-semibold px-4 py-2 text-sm">
+        <i class="fa-solid fa-lightbulb mr-1"></i> Insider Tips & Tricks
+      </button>
+    </div>
 
-    <!-- TAB 1: WORKOUT BLUEPRINT -->
-    <div id="section-workout" class="tab-content space-y-6">
-      <div class="bg-cardbg border border-pink-500/20 rounded-xl p-6">
-        <h2 class="text-xl font-bold text-white mb-2">Welcome to Your 4-Week Recomp</h2>
-        <p class="text-sm text-slate-300 mb-4">
-          Designed with CPT hypertrophy principles and Pilates core precision. Execute 5 gym strength days and 2 active recovery days while hitting your daily protein target.
-        </p>
+    <!-- TAB 1: WORKOUT BLUEPRINT -->
+    <div id="section-workout" class="tab-content space-y-6">
+      <div class="bg-cardbg border border-pink-500/20 rounded-xl p-6">
+        <h2 class="text-xl font-bold text-white mb-2">Welcome to Your 4-Week Recomp</h2>
+        <p class="text-sm text-slate-300 mb-4">
+          Designed with CPT hypertrophy principles and Pilates core precision. Execute 5 gym strength days and 2 active recovery days while hitting your daily protein target.
+        </p>
 
-        <!-- Stats Overview -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-          <div class="bg-slate-900 border border-pink-500/20 rounded-lg p-3">
-            <span class="text-xs text-pink-300 block">Workout Rate</span>
-            <span class="text-lg font-bold text-white" id="stat-completion">0%</span>
-            <span class="text-[10px] text-slate-400 block">of 28 sessions</span>
-          </div>
-          <div class="bg-slate-900 border border-pink-500/20 rounded-lg p-3">
-            <span class="text-xs text-pink-300 block">Daily Protein Target</span>
-            <span class="text-lg font-bold text-pink-300" id="stat-protein-target">140g</span>
-            <span class="text-[10px] text-slate-400 block"><span id="stat-protein-logged">0</span>g logged today</span>
-          </div>
-          <div class="bg-slate-900 border border-pink-500/20 rounded-lg p-3">
-            <span class="text-xs text-pink-300 block">Current Week</span>
-            <span class="text-lg font-bold text-white" id="stat-current-week">Week 1</span>
-            <span class="text-[10px] text-slate-400 block" id="stat-days-active">Day 1 Active</span>
-          </div>
-          <div class="bg-slate-900 border border-pink-500/20 rounded-lg p-3">
-            <span class="text-xs text-pink-300 block">Program Structure</span>
-            <span class="text-lg font-bold text-white">5 Gym + 2 Rest</span>
-            <span class="text-[10px] text-slate-400 block">CPT + Pilates</span>
-          </div>
-        </div>
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          <div class="bg-slate-900 border border-pink-500/20 rounded-lg p-3">
+            <span class="text-xs text-pink-300 block">Workout Rate</span>
+            <span class="text-lg font-bold text-white" id="stat-completion">0%</span>
+            <span class="text-[10px] text-slate-400 block">of 28 sessions</span>
+          </div>
+          <div class="bg-slate-900 border border-pink-500/20 rounded-lg p-3">
+            <span class="text-xs text-pink-300 block">Daily Protein Target</span>
+            <span class="text-lg font-bold text-pink-300" id="stat-protein-target">140g</span>
+            <span class="text-[10px] text-slate-400 block"><span id="stat-protein-logged">0</span>g logged today</span>
+          </div>
+          <div class="bg-slate-900 border border-pink-500/20 rounded-lg p-3">
+            <span class="text-xs text-pink-300 block">Current Week</span>
+            <span class="text-lg font-bold text-white" id="stat-current-week">Week 1</span>
+            <span class="text-[10px] text-slate-400 block" id="stat-days-active">Day 1 Active</span>
+          </div>
+          <div class="bg-slate-900 border border-pink-500/20 rounded-lg p-3">
+            <span class="text-xs text-pink-300 block">Program Structure</span>
+            <span class="text-lg font-bold text-white">5 Gym + 2 Rest</span>
+            <span class="text-[10px] text-slate-400 block">CPT + Pilates</span>
+          </div>
+        </div>
 
-        <!-- Weekly Drip-Unlock Selector -->
-        <div class="flex flex-wrap gap-2 mb-6" id="week-selector-container">
-          <button id="btn-week-1" onclick="selectWeek(1)" class="bg-pink-400 text-slate-950 text-xs font-bold px-4 py-2 rounded-lg transition">
-            Week 1
-          </button>
-          <button id="btn-week-2" onclick="selectWeek(2)" class="bg-slate-900 text-slate-400 text-xs font-bold px-4 py-2 rounded-lg border border-pink-500/10 cursor-not-allowed transition" disabled>
-            <i class="fa-solid fa-lock mr-1"></i> Week 2 (Locked)
-          </button>
-          <button id="btn-week-3" onclick="selectWeek(3)" class="bg-slate-900 text-slate-400 text-xs font-bold px-4 py-2 rounded-lg border border-pink-500/10 cursor-not-allowed transition" disabled>
-            <i class="fa-solid fa-lock mr-1"></i> Week 3 (Locked)
-          </button>
-          <button id="btn-week-4" onclick="selectWeek(4)" class="bg-slate-900 text-slate-400 text-xs font-bold px-4 py-2 rounded-lg border border-pink-500/10 cursor-not-allowed transition" disabled>
-            <i class="fa-solid fa-lock mr-1"></i> Week 4 (Locked)
-          </button>
-        </div>
+        <!-- Weekly Drip-Unlock Selector -->
+        <div class="flex flex-wrap gap-2 mb-6" id="week-selector-container">
+          <button id="btn-week-1" onclick="selectWeek(1)" class="bg-pink-400 text-slate-950 text-xs font-bold px-4 py-2 rounded-lg transition">
+            Week 1
+          </button>
+          <button id="btn-week-2" onclick="selectWeek(2)" class="bg-slate-900 text-slate-400 text-xs font-bold px-4 py-2 rounded-lg border border-pink-500/10 cursor-not-allowed transition" disabled>
+            <i class="fa-solid fa-lock mr-1"></i> Week 2 (Locked)
+          </button>
+          <button id="btn-week-3" onclick="selectWeek(3)" class="bg-slate-900 text-slate-400 text-xs font-bold px-4 py-2 rounded-lg border border-pink-500/10 cursor-not-allowed transition" disabled>
+            <i class="fa-solid fa-lock mr-1"></i> Week 3 (Locked)
+          </button>
+          <button id="btn-week-4" onclick="selectWeek(4)" class="bg-slate-900 text-slate-400 text-xs font-bold px-4 py-2 rounded-lg border border-pink-500/10 cursor-not-allowed transition" disabled>
+            <i class="fa-solid fa-lock mr-1"></i> Week 4 (Locked)
+          </button>
+        </div>
 
-        <!-- Dynamic Workout Display Area -->
-        <div id="workout-display-container" class="space-y-4">
-          <!-- Populated by JavaScript -->
-        </div>
-      </div>
-    </div>
+        <!-- Dynamic Workout Display Area -->
+        <div id="workout-display-container" class="space-y-4">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </div>
 
-    <!-- TAB 2: MACRO CALCULATOR -->
-    <div id="section-macro" class="tab-content hidden space-y-6">
-      <div class="bg-cardbg border border-pink-500/20 rounded-xl p-6">
-        <h2 class="text-xl font-bold text-white mb-1">High-Protein Macro Calculator</h2>
-        <p class="text-xs text-slate-400 mb-6">Calculate your exact baseline daily targets using body weight, height, age, and activity level.</p>
+    <!-- TAB 2: MACRO CALCULATOR -->
+    <div id="section-macro" class="tab-content hidden space-y-6">
+      <div class="bg-cardbg border border-pink-500/20 rounded-xl p-6">
+        <h2 class="text-xl font-bold text-white mb-1">High-Protein Macro Calculator</h2>
+        <p class="text-xs text-slate-400 mb-6">Calculate your exact baseline daily targets using body weight, height, age, and activity level.</p>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Inputs -->
-          <div class="space-y-4">
-            <div>
-              <label class="block text-sm font-medium text-pink-300 mb-1">Body Weight (lbs)</label>
-              <input type="number" id="calc-weight" value="140" class="w-full bg-slate-800 border border-pink-500/30 rounded-lg p-2 text-white focus:outline-none focus:border-pink-400" onchange="calculateMacros()">
-            </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Inputs -->
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-pink-300 mb-1">Body Weight (lbs)</label>
+              <input type="number" id="calc-weight" value="140" class="w-full bg-slate-800 border border-pink-500/30 rounded-lg p-2 text-white focus:outline-none focus:border-pink-400" onchange="calculateMacros()">
+            </div>
 
-            <div>
-              <label class="block text-sm font-medium text-pink-300 mb-1">Height (Total Inches)</label>
-              <input type="number" id="calc-height" value="65" placeholder="e.g. 65 (5'5&quot;)" class="w-full bg-slate-800 border border-pink-500/30 rounded-lg p-2 text-white focus:outline-none focus:border-pink-400" onchange="calculateMacros()">
-            </div>
+            <div>
+              <label class="block text-sm font-medium text-pink-300 mb-1">Height (Total Inches)</label>
+              <input type="number" id="calc-height" value="65" placeholder="e.g. 65 (5'5&quot;)" class="w-full bg-slate-800 border border-pink-500/30 rounded-lg p-2 text-white focus:outline-none focus:border-pink-400" onchange="calculateMacros()">
+            </div>
 
-            <div>
-              <label class="block text-sm font-medium text-pink-300 mb-1">Age (Years)</label>
-              <input type="number" id="calc-age" value="28" class="w-full bg-slate-800 border border-pink-500/30 rounded-lg p-2 text-white focus:outline-none focus:border-pink-400" onchange="calculateMacros()">
-            </div>
+            <div>
+              <label class="block text-sm font-medium text-pink-300 mb-1">Age (Years)</label>
+              <input type="number" id="calc-age" value="28" class="w-full bg-slate-800 border border-pink-500/30 rounded-lg p-2 text-white focus:outline-none focus:border-pink-400" onchange="calculateMacros()">
+            </div>
 
-            <div>
-              <label class="block text-sm font-medium text-pink-300 mb-1">Program Goal</label>
-              <select id="calc-goal" class="w-full bg-slate-800 border border-pink-500/30 rounded-lg p-2 text-white focus:outline-none focus:border-pink-400" onchange="syncGoal(this.value)">
-                <option value="recomp">Enhance the Curves- Body Recomp</option>
-                <option value="fat-loss">Slim Down Shred- Fat Loss</option>
-              </select>
-            </div>
+            <div>
+              <label class="block text-sm font-medium text-pink-300 mb-1">Program Goal</label>
+              <select id="calc-goal" class="w-full bg-slate-800 border border-pink-500/30 rounded-lg p-2 text-white focus:outline-none focus:border-pink-400" onchange="syncGoal(this.value)">
+                <option value="recomp">Enhance the Curves- Body Recomp</option>
+                <option value="fat-loss">Slim Down Shred- Fat Loss</option>
+              </select>
+            </div>
 
-            <div>
-              <label class="block text-sm font-medium text-pink-300 mb-1">Daily Activity Level</label>
-              <select id="calc-activity" class="w-full bg-slate-800 border border-pink-500/30 rounded-lg p-2 text-white focus:outline-none focus:border-pink-400" onchange="calculateMacros()">
-                <option value="1.375">Almost sticking to the plan (3-5 workouts weekly w/o 10k steps)</option>
-                <option value="1.55">Killing the Plan (5 workouts weekly + 2 active rest + 10K steps)</option>
-              </select>
-            </div>
-          </div>
+            <div>
+              <label class="block text-sm font-medium text-pink-300 mb-1">Daily Activity Level</label>
+              <select id="calc-activity" class="w-full bg-slate-800 border border-pink-500/30 rounded-lg p-2 text-white focus:outline-none focus:border-pink-400" onchange="calculateMacros()">
+                <option value="1.375">Almost sticking to the plan (3-5 workouts weekly w/o 10k steps)</option>
+                <option value="1.55">Killing the Plan (5 workouts weekly + 2 active rest + 10K steps)</option>
+              </select>
+            </div>
+          </div>
 
-          <!-- Target Output Card -->
-          <div class="bg-slate-900 border border-pink-500/30 rounded-xl p-6 flex flex-col justify-between">
-            <div>
-              <h3 class="text-sm font-bold text-pink-300 uppercase tracking-wider mb-4">Your Recommended Daily Targets</h3>
-              <div class="space-y-4">
-                <div class="flex justify-between items-baseline border-b border-pink-500/10 pb-2">
-                  <span class="text-sm text-slate-300">Daily Protein</span>
-                  <span id="target-protein" class="text-2xl font-bold text-pink-300">140g</span>
-                </div>
-                <div class="flex justify-between items-baseline border-b border-pink-500/10 pb-2">
-                  <span class="text-sm text-slate-300">Carbohydrates</span>
-                  <span id="target-carbs" class="text-2xl font-bold text-white">215g</span>
-                </div>
-                <div class="flex justify-between items-baseline border-b border-pink-500/10 pb-2">
-                  <span class="text-sm text-slate-300">Healthy Fats</span>
-                  <span id="target-fats" class="text-2xl font-bold text-white">55g</span>
-                </div>
-                <div class="flex justify-between items-baseline">
-                  <span class="text-sm text-slate-300">Estimated Calories</span>
-                  <span id="target-calories" class="text-2xl font-bold text-pink-400">1,915</span>
-                </div>
-              </div>
-            </div>
+          <!-- Target Output Card -->
+          <div class="bg-slate-900 border border-pink-500/30 rounded-xl p-6 flex flex-col justify-between">
+            <div>
+              <h3 class="text-sm font-bold text-pink-300 uppercase tracking-wider mb-4">Your Recommended Daily Targets</h3>
+              <div class="space-y-4">
+                <div class="flex justify-between items-baseline border-b border-pink-500/10 pb-2">
+                  <span class="text-sm text-slate-300">Daily Protein</span>
+                  <span id="target-protein" class="text-2xl font-bold text-pink-300">140g</span>
+                </div>
+                <div class="flex justify-between items-baseline border-b border-pink-500/10 pb-2">
+                  <span class="text-sm text-slate-300">Carbohydrates</span>
+                  <span id="target-carbs" class="text-2xl font-bold text-white">215g</span>
+                </div>
+                <div class="flex justify-between items-baseline border-b border-pink-500/10 pb-2">
+                  <span class="text-sm text-slate-300">Healthy Fats</span>
+                  <span id="target-fats" class="text-2xl font-bold text-white">55g</span>
+                </div>
+                <div class="flex justify-between items-baseline">
+                  <span class="text-sm text-slate-300">Estimated Calories</span>
+                  <span id="target-calories" class="text-2xl font-bold text-pink-400">1,915</span>
+                </div>
+              </div>
+            </div>
 
-            <div class="mt-6 bg-pink-500/10 border border-pink-400/20 rounded-lg p-3 text-xs text-pink-200">
-              <span class="font-bold text-pink-300">Coach Protein Rule:</span> Hitting 30g–40g of protein per meal across 3-4 meals is the most efficient way to maximize muscle protein synthesis and glute recovery.
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            <div class="mt-6 bg-pink-500/10 border border-pink-400/20 rounded-lg p-3 text-xs text-pink-200">
+              <span class="font-bold text-pink-300">Coach Protein Rule:</span> Hitting 30g–40g of protein per meal across 3-4 meals is the most efficient way to maximize muscle protein synthesis and glute recovery.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <!-- TAB 3: NUTRITION -->
-    <div id="section-nutrition" class="tab-content hidden space-y-6
+    <!-- TAB 3: NUTRITION -->
+    <div id="section-nutrition" class="tab-content hidden space-y-6">
+      <div class="bg-cardbg border border-pink-500/20 rounded-xl p-6">
+        <h2 class="text-xl font-bold text-white mb-2">Nutrition Is The Cheat Code</h2>
+        <p class="text-xs text-slate-400 mb-6">Use this reference list to build high-protein, nutrient-dense meals.</p>
+
+        <!-- Custom Protein Logger -->
+        <div class="bg-slate-900 border border-pink-500/20 rounded-xl p-4 mb-6 space-y-3">
+          <h3 class="text-sm font-bold text-pink-300">Add Custom Food Protein</h3>
+          <div class="flex gap-2">
+            <input type="number" id="custom-protein-input" placeholder="Grams of protein (e.g. 25)" class="flex-1 bg-slate-800 border border-pink-500/30 rounded-lg p-2 text-sm text-white focus:outline-none">
+            <button onclick="addCustomProtein()" class="bg-pink-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-sm hover:bg-pink-300 transition">
+              Log Protein
+            </button>
+          </div>
+          <p class="text-[11px] text-slate-400">Today's Logged Protein: <span id="logged-protein-val" class="text-pink-300 font-bold">0</span>g</p>
+        </div>
+
+        <!-- Food Options List -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-slate-900 p-4 rounded-lg border border-pink-500/10">
+            <h4 class="font-bold text-pink-300 text-sm mb-2 border-b border-pink-500/20 pb-1">High-Protein Sources</h4>
+            <ul class="text-xs space-y-1.5 text-slate-300">
+              <li>• Chicken / Turkey Breast (31g / 4oz)</li>
+              <li>• 93/7 Lean Ground Beef (24g / 4oz)</li>
+              <li>• Egg Whites (26g / 1 cup)</li>
+              <li>• 0% Plain Greek Yogurt (18g / 3/4 cup)</li>
+              <li>• Low-Fat Cottage Cheese (14g / 1/2 cup)</li>
+              <li>• Wild Salmon / Tuna (28g / 4oz)</li>
+              <li>• Whey / Plant Isolate (24-30g / scoop)</li>
+              <li>• Shrimp (24g / 4oz)</li>
+              <li>• Fairlife Ultra-Filtered Milk (13g / 1 cup)</li>
+              <li>• Edamame (17g / 1 cup)</li>
+            </ul>
+          </div>
+          <div class="bg-slate-900 p-4 rounded-lg border border-pink-500/10">
+            <h4 class="font-bold text-pink-300 text-sm mb-2 border-b border-pink-500/20 pb-1">Complex Carbohydrates</h4>
+            <ul class="text-xs space-y-1.5 text-slate-300">
+              <li>• Sweet Potatoes / Yams (26g / 1 cup)</li>
+              <li>• Quinoa (39g / 1 cup cooked)</li>
+              <li>• Rolled Oats (27g / 1/2 cup dry)</li>
+              <li>• Jasmine / Brown Rice (45g / 1 cup)</li>
+              <li>• Black / Pinto Beans (40g / 1 cup)</li>
+              <li>• High-Fiber Tortillas (18g / wrap)</li>
+              <li>• Berries (15g / 1 cup)</li>
+              <li>• Bananas (27g / medium)</li>
+              <li>• Ezekiel Whole Grain Bread (15g / slice)</li>
+            </ul>
+          </div>
+          <div class="bg-slate-900 p-4 rounded-lg border border-pink-500/10">
+            <h4 class="font-bold text-pink-300 text-sm mb-2 border-b border-pink-500/20 pb-1">Healthy Fats & Lipids</h4>
+            <ul class="text-xs space-y-1.5 text-slate-300">
+              <li>• Avocado (15g / 1/2 medium)</li>
+              <li>• Extra Virgin Olive Oil (14g / 1 tbsp)</li>
+              <li>• Almonds / Walnuts (14g / 1 oz)</li>
+              <li>• Natural Peanut Butter (16g / 2 tbsp)</li>
+              <li>• Chia / Flax Seeds (9g / 2 tbsp)</li>
+              <li>• Pumpkin Seeds (13g / 1 oz)</li>
+              <li>• Dark Chocolate 85%+ (12g / 1 oz)</li>
+              <li>• Grass-fed Butter / Ghee (12g / 1 tbsp)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: PROGRESS & ANALYTICS -->
+    <div id="section-progress" class="tab-content hidden space-y-6">
+      <div class="bg-cardbg border border-pink-500/20 rounded-xl p-6">
+        <h2 class="text-xl font-bold text-white mb-2">Recomp Progress Chart</h2>
+        <p class="text-xs text-slate-400 mb-4">Track Weight (lbs) and Waist (in) over time for clear waist-to-hip recomposition tracking.</p>
+
+        <div class="bg-slate-900 p-4 rounded-xl border border-pink-500/10 h-72">
+          <canvas id="recompChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: INSIDER TIPS & TRICKS -->
+    <div id="section-cues" class="tab-content hidden space-y-6">
+      <div class="bg-cardbg border border-pink-500/20 rounded-xl p-6">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="text-xs bg-pink-500/20 text-pink-300 px-3 py-1 rounded-full border border-pink-400/30 font-bold">No Gatekeeping</span>
+          <h2 class="text-xl font-bold text-white">Insider Tips & Tricks</h2>
+        </div>
+
+        <div class="space-y-4 text-xs text-slate-300">
+          <div class="bg-slate-900 p-4 rounded-lg border border-pink-500/10">
+            <h3 class="font-bold text-pink-300 text-sm mb-1">1. Pelvic Neutrality on Thrusts & Squats</h3>
+            <p>Avoid hyperextending the lumbar spine at the top of barbell hip thrusts. Keep chin tucked toward your chest and ribcage down (Pilates core engagement) to maximize gluteus maximus torque without lower back stress.</p>
+          </div>
+          <div class="bg-slate-900 p-4 rounded-lg border border-pink-500/10">
+            <h3 class="font-bold text-pink-300 text-sm mb-1">2. Diaphragmatic Breath & Transverse Abdominis</h3>
+            <p>Inhale through the nose into the back and sides of the ribs on the eccentric (lowering phase). Exhale forcefully through pursed lips on the concentric phase (lifting) while pulling the navel to spine.</p>
+          </div>
+          <div class="bg-slate-900 p-4 rounded-lg border border-pink-500/10">
+            <h3 class="font-bold text-pink-300 text-sm mb-1">3. Time Under Tension (3-1-1 Tempo)</h3>
+            <p>For optimal hypertrophy, control the lowering phase for 3 seconds, hold a 1-second squeeze at peak contraction, and return in 1 second.</p>
+          </div>
+          <div class="bg-slate-900 p-4 rounded-lg border border-pink-500/10">
+            <h3 class="font-bold text-pink-300 text-sm mb-1">4. Active Rest & Recovery</h3>
+            <p>2 days each week are non-negotiable active recovery days. Performing 20-30 minutes of Mat Pilates mobility work improves hip joint alignment and speeds up gluteal recovery between heavy gym sessions.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Tab Switcher Logic
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(el => {
+        el.classList.remove('border-b-2', 'border-pink-400', 'text-pink-300');
+        el.classList.add('text-slate-400');
+      });
+      
+      document.getElementById('section-' + tabName).classList.remove('hidden');
+      const activeBtn = document.getElementById('tab-' + tabName);
+      activeBtn.classList.add('border-b-2', 'border-pink-400', 'text-pink-300');
+      activeBtn.classList.remove('text-slate-400');
+    }
+
+    // Goal Sync
+    function syncGoal(val) {
+      document.getElementById('header-goal').value = val;
+      document.getElementById('calc-goal').value = val;
+      calculateMacros();
+    }
+
+    // MACRO CALCULATOR
+    function calculateMacros() {
+      const weightLbs = parseFloat(document.getElementById('calc-weight').value) || 140;
+      const heightInches = parseFloat(document.getElementById('calc-height').value) || 65;
+      const age = parseFloat(document.getElementById('calc-age').value) || 28;
+      const activityMultiplier = parseFloat(document.getElementById('calc-activity').value) || 1.375;
+      const goal = document.getElementById('calc-goal').value;
+
+      const weightKg = weightLbs * 0.453592;
+      const heightCm = heightInches * 2.54;
+
+      const bmr = (10 * weightKg) + (6.25 * heightCm) - (5 * age) - 161;
+      let tdee = bmr * activityMultiplier;
+
+      let targetCalories;
+      let proteinPerLb;
+
+      if (goal === 'fat-loss') {
+        targetCalories = tdee - 400;
+        proteinPerLb = 1.1;
+      } else {
+        targetCalories = tdee;
+        proteinPerLb = 1.0;
+      }
+
+      const proteinGrams = Math.round(weightLbs * proteinPerLb);
+      const proteinCalories = proteinGrams * 4;
+
+      const fatCalories = targetCalories * 0.25;
+      const fatGrams = Math.round(fatCalories / 9);
+
+      const carbCalories = targetCalories - (proteinCalories + fatCalories);
+      const carbGrams = Math.round(carbCalories / 4);
+
+      document.getElementById('target-protein').innerText = proteinGrams + 'g';
+      document.getElementById('target-carbs').innerText = carbGrams + 'g';
+      document.getElementById('target-fats').innerText = fatGrams + 'g';
+      document.getElementById('target-calories').innerText = Math.round(targetCalories).toLocaleString();
+      document.getElementById('stat-protein-target').innerText = proteinGrams + 'g';
+    }
+
+    // Custom Protein Tracker
+    let currentLoggedProtein = 0;
+    function addCustomProtein() {
+      const input = document.getElementById('custom-protein-input');
+      const val = parseFloat(input.value) || 0;
+      if (val > 0) {
+        currentLoggedProtein += val;
+        document.getElementById('logged-protein-val').innerText = currentLoggedProtein;
+        document.getElementById('stat-protein-logged').innerText = currentLoggedProtein;
+        input.value = '';
+      }
+    }
+
+    // Breath Timer Widget
+    let timerInterval = null;
+    let seconds = 0;
+    function toggleTimer() {
+      const btn = document.getElementById('timer-btn');
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        btn.innerText = 'Start';
+      } else {
+        timerInterval = setInterval(() => {
+          seconds++;
+          const mins = String(Math.floor(seconds / 60)).padStart(2, '0');
+          const secs = String(seconds % 60).padStart(2, '0');
+          document.getElementById('timer-display').innerText = `${mins}:${secs}`;
+        }, 1000);
+        btn.innerText = 'Pause';
+      }
+    }
+
+    // -------------------------------------------------------------
+    // OPTION 2: DRIP UNLOCK / TIMER LOGIC
+    // -------------------------------------------------------------
+    const workoutData = {
+      1: {
+        title: "Glute & Hamstring Hypertrophy",
+        tag: "Target: Glutes & Hamstrings",
+        note: "Focus on maximum glute activation, chin tucked on hip thrusts, and controlled eccentric tempo on RDLs.",
+        exercises: [
+          { name: "1. Barbell Hip Thrust", details: "4 Sets x 10-12 Reps | Tempo: 3-1-1", cue: "Keep chin tucked toward chest, pelvic neutral, squeeze glutes at top without hyperextending back.", search: "Barbell Hip thrust" },
+          { name: "2. Romanian Deadlift (RDL)", details: "3 Sets x 10-12 Reps | Tempo: 3-1-1", cue: "Soft bend in knees, hinge hips straight back, keep lats engaged and bar close to shins.", search: "Romanian Deadlift" },
+          { name: "3. Bulgarian Split Squat", details: "3 Sets x 8-10 Reps per leg", cue: "Slight forward torso lean to target glute max; drive through front heel.", search: "Bulgarian Split Squat" },
+          { name: "4. Smith Machine Goodmornings", details: "3 Sets x 12 Reps | Controlled Tempo", cue: "Brace core tightly, hinge at the hips while maintaining a flat back, and squeeze glutes at top.", search: "Smith machine goodmornings" }
+        ]
+      },
+      2: {
+        title: "Upper Body Sculpt & Pilates Core",
+        tag: "Target: Shoulders, Back & Core",
+        note: "Build a strong upper back to exaggerate the waist-to-hip ratio, paired with deep transverse abdominis engagement.",
+        exercises: [
+          { name: "1. Dumbbell Shoulder Press", details: "4 Sets x 10-12 Reps", cue: "Keep elbows slightly turned inward, core brace tightly, lower dumbbells to ear level.", search: "Dumbbell Shoulder Press" },
+          { name: "2. Lat Pulldown", details: "3 Sets x 10-12 Reps", cue: "Drive elbows down toward hip pockets; squeeze lower lats at bottom.", search: "Lat Pulldown" },
+          { name: "3. Seated Cable Row", details: "3 Sets x 12 Reps", cue: "Pull handle to belly button, squeeze shoulder blades together without shrugging.", search: "Seated Cable Row" },
+          { name: "4. Mat Pilates Core Circuit (Toe Taps & Hundred)", details: "3 Sets x 45 Secs Each", cue: "Imprint lower back into mat, exhale forcefully to engage deep core.", search: "Pilates Toe Taps and Hundred" }
+        ]
+      },
+      3: {
+        title: "Quads & Glute Hypertrophy Focus",
+        tag: "Target: Quads & Lower Body",
+        note: "Prioritize quad depth and glute shelf build with slow, controlled lowering phases.",
+        exercises: [
+          { name: "1. Barbell Back Squat / Goblet Squat", details: "4 Sets x 8-10 Reps", cue: "Push knees outward in line with toes, maintain flat back and break 90-degree parallel.", search: "Barbell Back Squat" },
+          { name: "2. Dumbbell Walking Lunges", details: "3 Sets x 12 Reps per leg", cue: "Take long strides for glute focus or shorter strides for quad bias.", search: "Dumbbell Walking Lunges" },
+          { name: "3. Leg Press (High & Wide Stance)", details: "3 Sets x 12-15 Reps", cue: "High/wide foot placement targets glutes and hamstrings; avoid locking knees at top.", search: "Leg Press high wide stance" },
+          { name: "4. Cable Glute Kickbacks", details: "3 Sets x 15 Reps per leg", cue: "Keep torso steady, squeeze glute at top extension without swinging upper body.", search: "Cable Glute Kickbacks" }
+        ]
+      },
+      4: {
+        title: "Full Body Recomp & Active Recovery",
+        tag: "Target: Full Body & Active Rest",
+        note: "Focus on mind-muscle connection, mobility work, and hitting progressive overload on key lifts.",
+        exercises: [
+          { name: "1. Cable Pull-Throughs", details: "4 Sets x 12-15 Reps", cue: "Hinge hips straight back toward cable anchor, snap hips forward at peak squeeze.", search: "Cable Pull Throughs" },
+          { name: "2. Single-Arm Dumbbell Row", details: "3 Sets x 10-12 Reps per arm", cue: "Pull elbow toward hip pocket, keep hips square to bench.", search: "Single Arm Dumbbell Row" },
+          { name: "3. Arnold Press", details: "3 Sets x 10-12 Reps", cue: "Rotate palms from facing you at bottom to facing out at full overhead extension.", search: "Arnold Press" },
+          { name: "4. Mat Pilates Mobility & Pelvic Alignment", details: "20 Mins Mobility Flow", cue: "Perform pelvic tilts, cat-cow, and hip openers for glute recovery.", search: "Mat Pilates Mobility Flow" }
+        ]
+      }
+    };
+
+    function initDripLockSystem() {
+      let startDateStr = localStorage.getItem('gymbaby_start_date');
+      if (!startDateStr) {
+        startDateStr = new Date().toISOString();
+        localStorage.setItem('gymbaby_start_date', startDateStr);
+      }
+
+      const startDate = new Date(startDateStr);
+      const today = new Date();
+      const diffTime = Math.abs(today - startDate);
+      const activeDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+      // Calculate accessible weeks based on active days
+      const weekUnlocks = {
+        1: true,                     // Week 1 unlocked on Day 1
+        2: activeDays >= 8,          // Week 2 unlocks on Day 8
+        3: activeDays >= 15,         // Week 3 unlocks on Day 15
+        4: activeDays >= 22          // Week 4 unlocks on Day 22
+      };
+
+      // Determine highest available week to highlight
+      let highestWeek = 1;
+      for (let w = 4; w >= 1; w--) {
+        if (weekUnlocks[w]) {
+          highestWeek = w;
+          break;
+        }
+      }
+
+      // Update UI Header Stats
+      document.getElementById('stat-current-week').innerText = 'Week ' + highestWeek;
+      document.getElementById('stat-days-active').innerText = 'Day ' + activeDays + ' Active';
+
+      // Update Button States
+      for (let w = 1; w <= 4; w++) {
+        const btn = document.getElementById('btn-week-' + w);
+        if (weekUnlocks[w]) {
+          btn.disabled = false;
+          btn.classList.remove('cursor-not-allowed', 'opacity-50');
+          btn.innerText = 'Week ' + w;
+          if (w === 1) {
+            btn.className = "bg-pink-400 text-slate-950 text-xs font-bold px-4 py-2 rounded-lg transition cursor-pointer";
+          } else {
+            btn.className = "bg-slate-900 text-pink-300 border border-pink-400/50 text-xs font-bold px-4 py-2 rounded-lg transition hover:bg-pink-500/20 cursor-pointer";
+          }
+        } else {
+          btn.disabled = true;
+          let daysLeft = (w === 2 ? 8 : w === 3 ? 15 : 22) - activeDays;
+          btn.innerHTML = `<i class="fa-solid fa-lock mr-1"></i> Week ${w} (${daysLeft}d left)`;
+          btn.className = "bg-slate-900 text-slate-500 text-xs font-bold px-4 py-2 rounded-lg border border-pink-500/10 cursor-not-allowed opacity-60";
+        }
+      }
+
+      selectWeek(1);
+    }
+
+    function selectWeek(weekNum) {
+      // Highlight selected button
+      for (let w = 1; w <= 4; w++) {
+        const btn = document.getElementById('btn-week-' + w);
+        if (!btn.disabled) {
+          if (w === weekNum) {
+            btn.className = "bg-pink-400 text-slate-950 text-xs font-bold px-4 py-2 rounded-lg transition cursor-pointer";
+          } else {
+            btn.className = "bg-slate-900 text-pink-300 border border-pink-400/50 text-xs font-bold px-4 py-2 rounded-lg transition hover:bg-pink-500/20 cursor-pointer";
+          }
+        }
+      }
+
+      const data = workoutData[weekNum] || workoutData[1];
+      const container = document.getElementById('workout-display-container');
+
+      let exercisesHtml = '';
+      data.exercises.forEach(ex => {
+        exercisesHtml += `
+          <div class="bg-cardbg rounded-lg p-3 border border-pink-500/10 space-y-2">
+            <div class="flex justify-between items-start">
+              <div>
+                <h4 class="font-semibold text-pink-300 text-sm">${ex.name}</h4>
+                <p class="text-xs text-slate-400">${ex.details}</p>
+              </div>
+              <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(ex.search)}" target="_blank" class="text-xs bg-pink-500/20 text-pink-300 border border-pink-400/30 px-2 py-1 rounded hover:bg-pink-500/30 transition flex items-center gap-1">
+                <i class="fa-brands fa-youtube text-red-400"></i> Watch Demo
+              </a>
+            </div>
+            <div class="bg-slate-900/60 p-2 rounded text-[11px] text-pink-200/90 border border-pink-500/10">
+              <span class="font-bold text-pink-300">Insider Tips & Tricks:</span> ${ex.cue} <br>
+              <span class="font-semibold text-slate-400">Coach Note:</span> search: ${ex.search}
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = `
+        <div class="bg-slate-900 border border-pink-500/20 rounded-xl p-4 space-y-4">
+          <div class="flex justify-between items-center border-b border-pink-500/10 pb-3">
+            <div>
+              <span class="text-xs text-pink-300 font-bold uppercase">Week ${weekNum} • Gym Day</span>
+              <h3 class="text-lg font-bold text-white">${data.title}</h3>
+            </div>
+            <span class="text-xs bg-pink-500/20 text-pink-300 px-3 py-1 rounded-full border border-pink-400/30">${data.tag}</span>
+          </div>
+          <p class="text-xs text-slate-400">${data.note}</p>
+          ${exercisesHtml}
+        </div>
+      `;
+    }
+
+    // Chart.js Init
+    window.onload = function() {
+      calculateMacros();
+      initDripLockSystem();
+
+      const ctx = document.getElementById('recompChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+          datasets: [
+            {
+              label: 'Weight (lbs)',
+              data: [140, 139.2, 138.8, 138.0],
+              borderColor: '#f9a8d4',
+              backgroundColor: 'rgba(249, 168, 212, 0.1)',
+              tension: 0.3,
+              yAxisID: 'y'
+            },
+            {
+              label: 'Waist (in)',
+              data: [28.0, 27.5, 27.2, 26.8],
+              borderColor: '#14b8a6',
+              backgroundColor: 'rgba(20, 184, 166, 0.1)',
+              tension: 0.3,
+              yAxisID: 'y1'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(249, 168, 212, 0.05)' } },
+            y: { position: 'left', ticks: { color: '#f9a8d4' }, grid: { color: 'rgba(249, 168, 212, 0.05)' } },
+            y1: { position: 'right', ticks: { color: '#14b8a6' }, grid: { drawOnChartArea: false } }
+          },
+          plugins: {
+            legend: { labels: { color: '#f8fafc' } }
+          }
+        }
+      });
+    };
+  </script>
+</body>
+</html>
