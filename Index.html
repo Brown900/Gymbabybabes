@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Gym Baby - The Babes Guide</title>
+  
+  <!-- Open Graph / Link Preview Tags -->
+  <meta property="og:title" content="The Gym Baby - The Babes Guide">
+  <meta property="og:description" content="4-Week Recomp Blueprint with CPT Hypertrophy & Pilates Core Precision.">
+  <meta property="og:image" content="https://ashley3428.github.io/Gymbabybabes/preview.png">
+  <meta property="og:url" content="https://ashley3428.github.io/Gymbabybabes/">
+  <meta property="og:type" content="website">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            babypink: {
+              300: '#fbcfe8',
+              400: '#f9a8d4',
+              500: '#f472b6',
+            },
+            slatebg: '#090d16',
+            cardbg: '#0f172a'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slatebg text-slate-100 font-sans min-h-screen pb-12">
+
+  <!-- Header / Navigation -->
+  <header class="border-b border-pink-500/20 bg-cardbg/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <img src="g_logo.png" alt="The Gym Baby Logo" class="w-12 h-12 rounded-full border border-pink-400/50 object-cover shadow-[0_0_15px_rgba(249,168,212,0.3)]" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="w-10 h-10 rounded-full bg-pink-500/20 border border-pink-400/50 hidden items-center justify-center text-pink-300 font-bold text-xl shadow-[0_0_15px_rgba(249,168,212,0.3)]">
+          G
+        </div>
+        <div>
+          <h1 class="text-2xl font-black tracking-wider text-white flex items-center gap-2">
+            THE GYM BABY
+            <span class="text-xs bg-pink-500/20 text-pink-300 px-2 py-0.5 rounded-full border border-pink-400/30 font-normal">
+              The Babes Guide
+            </span>
+          </h1>
+          <p class="text-xs text-pink-300/80">NASM CPT & Pilates Certified</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <!-- Goal Switcher -->
+        <div class="flex items-center gap-2 bg-slate-900 border border-pink-500/30 rounded-lg p-1.5">
+          <label for="header-goal" class="text-xs font-semibold text-pink-300">Goal:</label>
+          <select id="header-goal" class="bg-transparent text-sm text-white focus:outline-none cursor-pointer" onchange="syncGoal(this.value)">
+            <option value="recomp" class="bg-slate-900 text-white">Enhance the Curves- Body Recomp</option>
+            <option value="fat-loss" class="bg-slate-900 text-white">Slim Down Shred- Fat Loss</option>
+          </select>
+        </div>
+
+        <!-- Intentional Breath Moment Widget -->
+        <div class="flex items-center gap-2 bg-pink-500/10 border border-pink-400/30 px-3 py-1.5 rounded-lg">
+          <i class="fa-solid fa-wind text-pink-300"></i>
+          <span class="text-xs text-pink-200 font-medium">Intentional Breath Moment</span>
+          <span id="timer-display" class="font-mono text-sm font-bold text-pink-300">00:00</span>
+          <button onclick="toggleTimer()" id="timer-btn" class="text-xs bg-pink-400 hover:bg-pink-300 text-slate-950 font-bold px-2 py-0.5 rounded transition">
+            Start
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 mt-8 space-y-8">
+    
+    <!-- Coach Breath Note -->
+    <div class="bg-pink-500/10 border border-pink-400/30 rounded-xl p-4 flex items-start gap-3">
+      <i class="fa-solid fa-heart-pulse text-pink-300 text-xl mt-0.5"></i>
+      <div>
+        <h4 class="text-sm font-bold text-pink-300 uppercase tracking-wider">Coach Note</h4>
+        <p class="text-xs text-slate-300 mt-1">
+          Use this intentional pause to center your mind. Deep, conscious breathing grounds us, regulates cortisol levels, and helps us move through daily stressors with intention and grace.
+        </p>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="flex flex-wrap border-b border-pink-500/20 gap-2">
+      <button onclick="switchTab('workout')" id="tab-workout" class="tab-btn active border-b-2 border-pink-400 text-pink-300 font-semibold px-4 py-2 text-sm">
+        <i class="fa-solid fa-dumbbell mr-1"></i> 4-Week Blueprint
+      </button>
+      <button onclick="switchTab('macro')" id="tab-macro" class="tab-btn text-slate-400 hover:text-pink-300 font-semibold px-4 py-2 text-sm">
+        <i class="fa-solid fa-calculator mr-1"></i> Macro Calculator
+      </button>
+      <button onclick="switchTab('nutrition')" id="tab-nutrition" class="tab-btn text-slate-400 hover:text-pink-300 font-semibold px-4 py-2 text-sm">
+        <i class="fa-solid fa-utensils mr-1"></i> Nutrition
+      </button>
+      <button onclick="switchTab('progress')" id="tab-progress" class="tab-btn text-slate-400 hover:text-pink-300 font-semibold px-4 py-2 text-sm">
+        <i class="fa-solid fa-chart-line mr-1"></i> Progress & Analytics
+      </button>
+      <button onclick="switchTab('cues')" id="tab-cues" class="tab-btn text-slate-400 hover:text-pink-300 font-semibold px-4 py-2 text-sm">
+        <i class="fa-solid fa-lightbulb mr-1"></i> Insider Tips & Tricks
+      </button>
+    </div>
+
+    <!-- TAB 1: WORKOUT BLUEPRINT -->
+    <div id="section-workout" class="tab-content space-y-6">
+      <div class="bg-cardbg border border-pink-500/20 rounded-xl p-6">
+        <h2 class="text-xl font-bold text-white mb-2">Welcome to Your 4-Week Recomp</h2>
+        <p class="text-sm text-slate-300 mb-4">
+          Designed with CPT hypertrophy principles and Pilates core precision. Execute 5 gym strength days and 2 active recovery days while hitting your daily protein target.
+        </p>
+
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          <div class="bg-slate-900 border border-pink-500/20 rounded-lg p-3">
+            <span class="text-xs text-pink-300 block">Workout Rate</span>
+            <span class="text-lg font-bold text-white" id="stat-completion">0%</span>
+            <span class="text-[10px] text-slate-400 block">of 28 sessions</span>
+          </div>
+          <div class="bg-slate-900 border border-pink-500/20 rounded-lg p-3">
+            <span class="text-xs text-pink-300 block">Daily Protein Target</span>
+            <span class="text-lg font-bold text-pink-300" id="stat-protein-target">140g</span>
+            <span class="text-[10px] text-slate-400 block"><span id="stat-protein-logged">0</span>g logged today</span>
+          </div>
+          <div class="bg-slate-900 border border-pink-500/20 rounded-lg p-3">
+            <span class="text-xs text-pink-300 block">Current Week</span>
+            <span class="text-lg font-bold text-white" id="stat-current-week">Week 1</span>
+            <span class="text-[10px] text-slate-400 block" id="stat-days-active">Day 1 Active</span>
+          </div>
+          <div class="bg-slate-900 border border-pink-500/20 rounded-lg p-3">
+            <span class="text-xs text-pink-300 block">Program Structure</span>
+            <span class="text-lg font-bold text-white">5 Gym + 2 Rest</span>
+            <span class="text-[10px] text-slate-400 block">CPT + Pilates</span>
+          </div>
+        </div>
+
+        <!-- Weekly Drip-Unlock Selector -->
+        <div class="flex flex-wrap gap-2 mb-6" id="week-selector-container">
+          <button id="btn-week-1" onclick="selectWeek(1)" class="bg-pink-400 text-slate-950 text-xs font-bold px-4 py-2 rounded-lg transition">
+            Week 1
+          </button>
+          <button id="btn-week-2" onclick="selectWeek(2)" class="bg-slate-900 text-slate-400 text-xs font-bold px-4 py-2 rounded-lg border border-pink-500/10 cursor-not-allowed transition" disabled>
+            <i class="fa-solid fa-lock mr-1"></i> Week 2 (Locked)
+          </button>
+          <button id="btn-week-3" onclick="selectWeek(3)" class="bg-slate-900 text-slate-400 text-xs font-bold px-4 py-2 rounded-lg border border-pink-500/10 cursor-not-allowed transition" disabled>
+            <i class="fa-solid fa-lock mr-1"></i> Week 3 (Locked)
+          </button>
+          <button id="btn-week-4" onclick="selectWeek(4)" class="bg-slate-900 text-slate-400 text-xs font-bold px-4 py-2 rounded-lg border border-pink-500/10 cursor-not-allowed transition" disabled>
+            <i class="fa-solid fa-lock mr-1"></i> Week 4 (Locked)
+          </button>
+        </div>
+
+        <!-- Dynamic Workout Display Area -->
+        <div id="workout-display-container" class="space-y-4">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: MACRO CALCULATOR -->
+    <div id="section-macro" class="tab-content hidden space-y-6">
+      <div class="bg-cardbg border border-pink-500/20 rounded-xl p-6">
+        <h2 class="text-xl font-bold text-white mb-1">High-Protein Macro Calculator</h2>
+        <p class="text-xs text-slate-400 mb-6">Calculate your exact baseline daily targets using body weight, height, age, and activity level.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Inputs -->
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-pink-300 mb-1">Body Weight (lbs)</label>
+              <input type="number" id="calc-weight" value="140" class="w-full bg-slate-800 border border-pink-500/30 rounded-lg p-2 text-white focus:outline-none focus:border-pink-400" onchange="calculateMacros()">
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-pink-300 mb-1">Height (Total Inches)</label>
+              <input type="number" id="calc-height" value="65" placeholder="e.g. 65 (5'5&quot;)" class="w-full bg-slate-800 border border-pink-500/30 rounded-lg p-2 text-white focus:outline-none focus:border-pink-400" onchange="calculateMacros()">
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-pink-300 mb-1">Age (Years)</label>
+              <input type="number" id="calc-age" value="28" class="w-full bg-slate-800 border border-pink-500/30 rounded-lg p-2 text-white focus:outline-none focus:border-pink-400" onchange="calculateMacros()">
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-pink-300 mb-1">Program Goal</label>
+              <select id="calc-goal" class="w-full bg-slate-800 border border-pink-500/30 rounded-lg p-2 text-white focus:outline-none focus:border-pink-400" onchange="syncGoal(this.value)">
+                <option value="recomp">Enhance the Curves- Body Recomp</option>
+                <option value="fat-loss">Slim Down Shred- Fat Loss</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-pink-300 mb-1">Daily Activity Level</label>
+              <select id="calc-activity" class="w-full bg-slate-800 border border-pink-500/30 rounded-lg p-2 text-white focus:outline-none focus:border-pink-400" onchange="calculateMacros()">
+                <option value="1.375">Almost sticking to the plan (3-5 workouts weekly w/o 10k steps)</option>
+                <option value="1.55">Killing the Plan (5 workouts weekly + 2 active rest + 10K steps)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Target Output Card -->
+          <div class="bg-slate-900 border border-pink-500/30 rounded-xl p-6 flex flex-col justify-between">
+            <div>
+              <h3 class="text-sm font-bold text-pink-300 uppercase tracking-wider mb-4">Your Recommended Daily Targets</h3>
+              <div class="space-y-4">
+                <div class="flex justify-between items-baseline border-b border-pink-500/10 pb-2">
+                  <span class="text-sm text-slate-300">Daily Protein</span>
+                  <span id="target-protein" class="text-2xl font-bold text-pink-300">140g</span>
+                </div>
+                <div class="flex justify-between items-baseline border-b border-pink-500/10 pb-2">
+                  <span class="text-sm text-slate-300">Carbohydrates</span>
+                  <span id="target-carbs" class="text-2xl font-bold text-white">215g</span>
+                </div>
+                <div class="flex justify-between items-baseline border-b border-pink-500/10 pb-2">
+                  <span class="text-sm text-slate-300">Healthy Fats</span>
+                  <span id="target-fats" class="text-2xl font-bold text-white">55g</span>
+                </div>
+                <div class="flex justify-between items-baseline">
+                  <span class="text-sm text-slate-300">Estimated Calories</span>
+                  <span id="target-calories" class="text-2xl font-bold text-pink-400">1,915</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 bg-pink-500/10 border border-pink-400/20 rounded-lg p-3 text-xs text-pink-200">
+              <span class="font-bold text-pink-300">Coach Protein Rule:</span> Hitting 30g–40g of protein per meal across 3-4 meals is the most efficient way to maximize muscle protein synthesis and glute recovery.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: NUTRITION -->
+    <div id="section-nutrition" class="tab-content hidden space-y-6
