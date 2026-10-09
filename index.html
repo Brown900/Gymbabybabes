@@ -765,12 +765,64 @@ function calculateMacros() {
         }
       }
 
-      selectWeek(1);
+     // -------------------------------------------------------------
+    // EXERCISE CHECKBOX & COMPLETION TRACKING LOGIC
+    // -------------------------------------------------------------
+
+    // Helper: Load checked exercises from localStorage
+    function getCompletedExercises() {
+      const saved = localStorage.getItem('gymbaby_completed_exercises');
+      return saved ? JSON.parse(saved) : {};
     }
 
-    function selectWeek(weekNum) {
-      currentSelectedWeek = weekNum;
-      // Highlight selected week button
+    // Toggle exercise completion state
+    function toggleExercise(weekNum, dayNum, exerciseIndex) {
+      const completed = getCompletedExercises();
+      const key = `w${weekNum}_d${dayNum}_e${exerciseIndex}`;
+
+      completed[key] = !completed[key];
+      localStorage.setItem('gymbaby_completed_exercises', JSON.stringify(completed));
+
+      // Re-render UI and update stats
+      selectWeek(weekNum, dayNum);
+      updateCompletionStats();
+    }
+
+    // Calculate & update overall program completion rate percentage
+    function updateCompletionStats() {
+      const completed = getCompletedExercises();
+      let totalExercises = 0;
+      let completedCount = 0;
+
+      // Count total exercises across all available weeks/days
+      Object.keys(workoutData).forEach(wKey => {
+        const week = workoutData[wKey];
+        if (week.days) {
+          Object.keys(week.days).forEach(dKey => {
+            const day = week.days[dKey];
+            if (day.exercises) {
+              day.exercises.forEach((ex, exIdx) => {
+                totalExercises++;
+                if (completed[`w${wKey}_d${dKey}_e${exIdx}`]) {
+                  completedCount++;
+                }
+              });
+            }
+          });
+        }
+      });
+
+      const percentage = totalExercises > 0 ? Math.round((completedCount / totalExercises) * 100) : 0;
+      
+      const statElem = document.getElementById('stat-completion');
+      if (statElem) {
+        statElem.innerText = `${percentage}%`;
+      }
+    }
+
+    // Render current week & day workout cards with interactive checkboxes
+    function selectWeek(weekNum, selectedDay = 1) {
+      // Highlight active week button
       for (let w = 1; w <= 4; w++) {
         const btn = document.getElementById('btn-week-' + w);
         if (btn && !btn.disabled) {
@@ -781,6 +833,83 @@ function calculateMacros() {
           }
         }
       }
+
+      const weekInfo = workoutData[weekNum] || workoutData[1];
+      const container = document.getElementById('workout-display-container');
+      const completedMap = getCompletedExercises();
+
+      // Sub-Navigation Bar for Days 1 through 5
+      let dayNavHtml = '<div class="flex flex-wrap gap-2 border-b border-pink-500/10 pb-3 mb-4">';
+      for (let d = 1; d <= 5; d++) {
+        const isDayActive = d === selectedDay;
+        const dayClass = isDayActive
+          ? "bg-pink-500/20 text-pink-300 border border-pink-400/50 font-bold px-3 py-1.5 rounded-lg text-xs"
+          : "bg-slate-900 text-slate-400 border border-pink-500/10 hover:text-pink-300 px-3 py-1.5 rounded-lg text-xs transition cursor-pointer";
+        
+        dayNavHtml += `<button onclick="selectWeek(${weekNum}, ${d})" class="${dayClass}">Day ${d}</button>`;
+      }
+      dayNavHtml += '</div>';
+
+      const currentDayData = (weekInfo.days && weekInfo.days[selectedDay]) ? weekInfo.days[selectedDay] : {
+        title: `Day ${selectedDay} • Active Training`,
+        tag: "Recomp Focus",
+        note: "Follow form cues and log completed sets.",
+        exercises: []
+      };
+
+      let exercisesHtml = '';
+      currentDayData.exercises.forEach((ex, exIdx) => {
+        const exKey = `w${weekNum}_d${selectedDay}_e${exIdx}`;
+        const isChecked = !!completedMap[exKey];
+
+        exercisesHtml += `
+          <div class="bg-cardbg rounded-lg p-3 border ${isChecked ? 'border-pink-400/60 bg-pink-500/5' : 'border-pink-500/10'} space-y-2 transition-all">
+            <div class="flex justify-between items-start gap-3">
+              <div class="flex items-start gap-3">
+                <!-- Checkbox -->
+                <input 
+                  type="checkbox" 
+                  id="${exKey}" 
+                  ${isChecked ? 'checked' : ''} 
+                  onchange="toggleExercise(${weekNum}, ${selectedDay}, ${exIdx})"
+                  class="mt-1 w-4 h-4 accent-pink-400 cursor-pointer rounded border-slate-700 focus:ring-pink-400"
+                >
+                <div>
+                  <label for="${exKey}" class="font-semibold ${isChecked ? 'line-through text-slate-400' : 'text-pink-300'} text-sm cursor-pointer">
+                    ${ex.name}
+                  </label>
+                  <p class="text-xs text-slate-400">${ex.details}</p>
+                </div>
+              </div>
+
+              <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(ex.search)}" target="_blank" class="text-xs bg-pink-500/20 text-pink-300 border border-pink-400/30 px-2 py-1 rounded hover:bg-pink-500/30 transition flex items-center gap-1 shrink-0">
+                <i class="fa-brands fa-youtube text-red-400"></i> Watch Demo
+              </a>
+            </div>
+
+            <div class="bg-slate-900/60 p-2 rounded text-[11px] text-pink-200/90 border border-pink-500/10">
+              <span class="font-bold text-pink-300">Insider Tips & Tricks:</span> ${ex.cue} <br>
+              <span class="font-semibold text-slate-400">Coach Note:</span> search: ${ex.search}
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = `
+        <div class="bg-slate-900 border border-pink-500/20 rounded-xl p-4 space-y-4">
+          ${dayNavHtml}
+          <div class="flex justify-between items-center border-b border-pink-500/10 pb-3">
+            <div>
+              <span class="text-xs text-pink-300 font-bold uppercase">Week ${weekNum} • ${currentDayData.title}</span>
+              <h3 class="text-lg font-bold text-white mt-0.5">${currentDayData.title}</h3>
+            </div>
+            <span class="text-xs bg-pink-500/20 text-pink-300 px-3 py-1 rounded-full border border-pink-400/30">${currentDayData.tag}</span>
+          </div>
+          <p class="text-xs text-slate-400">${currentDayData.note}</p>
+          ${exercisesHtml}
+        </div>
+      `;
+    }
 
       // Default to Day 1 on week change
       renderWorkoutDay(weekNum, 1);
