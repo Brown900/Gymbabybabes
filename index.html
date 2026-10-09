@@ -182,21 +182,21 @@
               <input type="number" id="calc-weight" value="140" class="w-full bg-slate-800 border border-pink-500/30 rounded-lg p-2 text-white focus:outline-none focus:border-pink-400" onchange="calculateMacros()">
             </div>
 
-            <!-- NEW HEIGHT INPUTS (FEET & INCHES) -->
-<div>
-  <label class="block text-sm font-medium text-pink-300 mb-1">Height</label>
-  <div class="grid grid-cols-2 gap-2">
-    <div>
-      <input type="number" id="calc-height-ft" value="5" min="3" max="7" placeholder="Ft" class="w-full bg-slate-800 border border-pink-500/30 rounded-lg p-2 text-white focus:outline-none focus:border-pink-400" onchange="calculateMacros()">
-      <span class="text-[10px] text-slate-400 mt-0.5 block">Feet</span>
-    </div>
-    <div>
-      <input type="number" id="calc-height-in" value="5" min="0" max="11" placeholder="In" class="w-full bg-slate-800 border border-pink-500/30 rounded-lg p-2 text-white focus:outline-none focus:border-pink-400" onchange="calculateMacros()">
-      <span class="text-[10px] text-slate-400 mt-0.5 block">Inches</span>
-    </div>
-  </div>
-</div>
-            
+            <!-- Feet and Inches Input -->
+            <div>
+              <label class="block text-sm font-medium text-pink-300 mb-1">Height</label>
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <input type="number" id="calc-height-ft" value="5" min="3" max="7" placeholder="Ft" class="w-full bg-slate-800 border border-pink-500/30 rounded-lg p-2 text-white focus:outline-none focus:border-pink-400" onchange="calculateMacros()">
+                  <span class="text-[10px] text-slate-400 mt-0.5 block">Feet</span>
+                </div>
+                <div>
+                  <input type="number" id="calc-height-in" value="5" min="0" max="11" placeholder="In" class="w-full bg-slate-800 border border-pink-500/30 rounded-lg p-2 text-white focus:outline-none focus:border-pink-400" onchange="calculateMacros()">
+                  <span class="text-[10px] text-slate-400 mt-0.5 block">Inches</span>
+                </div>
+              </div>
+            </div>
+
             <div>
               <label class="block text-sm font-medium text-pink-300 mb-1">Age (Years)</label>
               <input type="number" id="calc-age" value="28" class="w-full bg-slate-800 border border-pink-500/30 rounded-lg p-2 text-white focus:outline-none focus:border-pink-400" onchange="calculateMacros()">
@@ -382,52 +382,50 @@
       calculateMacros();
     }
 
-    // NEW JAVASCRIPT LOGIC
-function calculateMacros() {
-  const weightLbs = parseFloat(document.getElementById('calc-weight').value) || 140;
-  
-  // Convert Feet + Inches to Total Inches
-  const heightFeet = parseFloat(document.getElementById('calc-height-ft').value) || 0;
-  const heightInchesOnly = parseFloat(document.getElementById('calc-height-in').value) || 0;
-  const heightInches = (heightFeet * 12) + heightInchesOnly;
+    // MACRO CALCULATOR WITH FEET & INCHES
+    function calculateMacros() {
+      const weightLbs = parseFloat(document.getElementById('calc-weight').value) || 140;
+      
+      const heightFeet = parseFloat(document.getElementById('calc-height-ft').value) || 0;
+      const heightInchesOnly = parseFloat(document.getElementById('calc-height-in').value) || 0;
+      const heightInches = (heightFeet * 12) + heightInchesOnly;
 
-  const age = parseFloat(document.getElementById('calc-age').value) || 28;
-  const activityMultiplier = parseFloat(document.getElementById('calc-activity').value) || 1.375;
-  const goal = document.getElementById('calc-goal').value;
+      const age = parseFloat(document.getElementById('calc-age').value) || 28;
+      const activityMultiplier = parseFloat(document.getElementById('calc-activity').value) || 1.375;
+      const goal = document.getElementById('calc-goal').value;
 
-  // Convert imperial to metric (cm) for Mifflin-St Jeor equation
-  const weightKg = weightLbs * 0.453592;
-  const heightCm = heightInches * 2.54;
+      const weightKg = weightLbs * 0.453592;
+      const heightCm = heightInches * 2.54;
 
-  const bmr = (10 * weightKg) + (6.25 * heightCm) - (5 * age) - 161;
-  let tdee = bmr * activityMultiplier;
+      const bmr = (10 * weightKg) + (6.25 * heightCm) - (5 * age) - 161;
+      let tdee = bmr * activityMultiplier;
 
-  let targetCalories;
-  let proteinPerLb;
+      let targetCalories;
+      let proteinPerLb;
 
-  if (goal === 'fat-loss') {
-    targetCalories = tdee - 400;
-    proteinPerLb = 1.1;
-  } else {
-    targetCalories = tdee;
-    proteinPerLb = 1.0;
-  }
+      if (goal === 'fat-loss') {
+        targetCalories = tdee - 400;
+        proteinPerLb = 1.1;
+      } else {
+        targetCalories = tdee;
+        proteinPerLb = 1.0;
+      }
 
-  const proteinGrams = Math.round(weightLbs * proteinPerLb);
-  const proteinCalories = proteinGrams * 4;
+      const proteinGrams = Math.round(weightLbs * proteinPerLb);
+      const proteinCalories = proteinGrams * 4;
 
-  const fatCalories = targetCalories * 0.25;
-  const fatGrams = Math.round(fatCalories / 9);
+      const fatCalories = targetCalories * 0.25;
+      const fatGrams = Math.round(fatCalories / 9);
 
-  const carbCalories = targetCalories - (proteinCalories + fatCalories);
-  const carbGrams = Math.round(carbCalories / 4);
+      const carbCalories = targetCalories - (proteinCalories + fatCalories);
+      const carbGrams = Math.round(carbCalories / 4);
 
-  document.getElementById('target-protein').innerText = proteinGrams + 'g';
-  document.getElementById('target-carbs').innerText = carbGrams + 'g';
-  document.getElementById('target-fats').innerText = fatGrams + 'g';
-  document.getElementById('target-calories').innerText = Math.round(targetCalories).toLocaleString();
-  document.getElementById('stat-protein-target').innerText = proteinGrams + 'g';
-}
+      document.getElementById('target-protein').innerText = proteinGrams + 'g';
+      document.getElementById('target-carbs').innerText = carbGrams + 'g';
+      document.getElementById('target-fats').innerText = fatGrams + 'g';
+      document.getElementById('target-calories').innerText = Math.round(targetCalories).toLocaleString();
+      document.getElementById('stat-protein-target').innerText = proteinGrams + 'g';
+    }
 
     // Custom Protein Tracker
     let currentLoggedProtein = 0;
@@ -463,7 +461,57 @@ function calculateMacros() {
     }
 
     // -------------------------------------------------------------
-    // DRIP UNLOCK & EXPANDED 5-DAY WORKOUT DATA FOR ALL 4 WEEKS
+    // EXERCISE CHECKBOX & COMPLETION TRACKING LOGIC
+    // -------------------------------------------------------------
+
+    function getCompletedExercises() {
+      const saved = localStorage.getItem('gymbaby_completed_exercises');
+      return saved ? JSON.parse(saved) : {};
+    }
+
+    function toggleExercise(weekNum, dayNum, exerciseIndex) {
+      const completed = getCompletedExercises();
+      const key = `w${weekNum}_d${dayNum}_e${exerciseIndex}`;
+
+      completed[key] = !completed[key];
+      localStorage.setItem('gymbaby_completed_exercises', JSON.stringify(completed));
+
+      selectWeek(weekNum, dayNum);
+      updateCompletionStats();
+    }
+
+    function updateCompletionStats() {
+      const completed = getCompletedExercises();
+      let totalExercises = 0;
+      let completedCount = 0;
+
+      Object.keys(workoutData).forEach(wKey => {
+        const week = workoutData[wKey];
+        if (week.days) {
+          Object.keys(week.days).forEach(dKey => {
+            const day = week.days[dKey];
+            if (day.exercises) {
+              day.exercises.forEach((ex, exIdx) => {
+                totalExercises++;
+                if (completed[`w${wKey}_d${dKey}_e${exIdx}`]) {
+                  completedCount++;
+                }
+              });
+            }
+          });
+        }
+      });
+
+      const percentage = totalExercises > 0 ? Math.round((completedCount / totalExercises) * 100) : 0;
+      
+      const statElem = document.getElementById('stat-completion');
+      if (statElem) {
+        statElem.innerText = `${percentage}%`;
+      }
+    }
+
+    // -------------------------------------------------------------
+    // WORKOUT DATA STRUCTURE (WEEKS 1 & 2)
     // -------------------------------------------------------------
     const workoutData = {
       1: {
@@ -510,18 +558,18 @@ function calculateMacros() {
               { name: "1. Dumbbell Shoulder Press", details: "3 Sets x 10-12 Reps", cue: "Keep elbows slightly turned inward, core braced tightly, lower dumbbells to ear level.", search: "Dumbbell Shoulder Press" },
               { name: "2. Single-Arm Cable Face Pulls", details: "3 Sets x 15 Reps", cue: "Pull cable towards eye level, separating hands at peak contraction for rear delts.", search: "Cable Face Pulls" },
               { name: "3. Dumbbell Lateral Raises", details: "4 Sets x 12-15 Reps", cue: "Slight forward lean, raise elbows to shoulder height as if pouring two pitchers of water.", search: "Dumbbell Lateral Raise" },
-              { name: "4. Plank & Swimmer Kicks", details: "3 Sets x 1 min each", cue: "Little to no rest between each movement.", search: "Plank and Swimmer Kick abs" }
+              { name: "4. Mat Pilates Roll-Up & Single-Leg Circles", details: "3 Sets x 10 Reps per side", cue: "Peel spine off mat bone by bone, maintain pelvic stability while circling leg from hip socket.", search: "Pilates Roll Up and Single Leg Circles" }
             ]
           },
           5: {
             title: "Day 5 • Circuit Style Recomp & Conditioning",
             tag: "Target: Full Body Conditioning & Endurance",
-            note: "Circuit Style Training: Execute 1-minute intervals per exercise. Complete all 4 movements back-to-back, rest 60 seconds at the end of the round, and repeat for 3-6 total rounds.",
+            note: "Circuit Style Training: Execute 1-minute intervals per exercise. Complete all 4 movements back-to-back, rest 60 seconds at the end of the round, and repeat for 3-4 total rounds.",
             exercises: [
               { name: "1. Dumbbell Sumo Squat to Upright Row", details: "1-Minute Interval | High Energy", cue: "Drive through heels, squeeze glutes at top, drive elbows high on upright row.", search: "Sumo Squat to Upright Row" },
               { name: "2. Jump Rope or Burpees", details: "1-Minute Interval | Cardio Power", cue: "Maintain steady cadence on jump rope, or stay light on toes and brace core tightly on burpees.", search: "Jump Rope and Burpees exercise" },
               { name: "3. Flutter Kicks", details: "1-Minute Interval | Lower Core Focus", cue: "Imprint lower back into mat, extend legs, flutter with controlled speed using lower abs.", search: "Pilates Flutter Kicks core" },
-              { name: "4. Reverse Lunge with Same-Side Dumbbell Press", details: "1-Minute Interval each side", cue: "Step back into lunge holding dumbbell on same side, press overhead as you drive through front heel.", search: "Reverse Lunge with Dumbbell Press" }
+              { name: "4. Reverse Lunge with Same-Side Dumbbell Press", details: "1-Minute Interval (30s per side)", cue: "Step back into lunge holding dumbbell on same side, press overhead as you drive through front heel.", search: "Reverse Lunge with Dumbbell Press" }
             ]
           }
         }
@@ -553,164 +601,18 @@ function calculateMacros() {
           },
           3: {
             title: "Day 3 • Quads & Glute Hypertrophy Focus",
-            tag: "Target: Quads & Glute Max",
-            note: "Work on deep range of motion in squats and foot placement variation on leg press.",
+            tag: "Target: Quads & Lower Body",
+            note: "Prioritize quad depth and glute shelf building with slow, controlled lowering phases.",
             exercises: [
-              { name: "1. Heel-Elevated Goblet Squat", details: "4 Sets x 10-12 Reps", cue: "Elevate heels on small plates for maximum quad depth and torso upright posture.", search: "Heel Elevated Goblet Squat" },
-              { name: "2. Reverse Deficit Lunges", details: "3 Sets x 10 Reps per leg", cue: "Step back from a small riser or plate; hinge forward slightly to load front glute.", search: "Deficit Reverse Lunge" },
-              { name: "3. Leg Press (Single-Leg Bias)", details: "3 Sets x 10 Reps per leg", cue: "Press through mid-foot and heel, keeping knee aligned over second toe.", search: "Single Leg Press" },
-              { name: "4. Romanian Deadlift (RDL)", details: "3 Sets x 10-12 Reps | Tempo: 3-1-1", cue: "Soft bend in knees, hinge hips straight back, keep lats engaged and bar close to shins.", search: "Romanian Deadlift" }
-             ]
-          },
-          4: {
-            title: "Day 4 • Upper Body Posture & Oblique Shaping",
-            tag: "Target: Rear Delts, Upper Back & Obliques",
-            note: "Improve posture alignment and lengthen waist muscles with controlled oblique twists.",
-            exercises: [
-              { name: "1. Standing Cable Face Pulls", details: "4 Sets x 15 Reps", cue: "Pull rope attachment to ears, separating hands and squeezing rear deltoids.", search: "Cable Face Pulls" },
-              { name: "2. Dumbbell Lateral Raises (Drop Set)", details: "3 Sets x 12 Reps + 5 Burnout Reps", cue: "Raise weights to side; drop weight by 5 lbs for final reps without rest.", search: "Dumbbell Lateral Raise Drop Set" },
-              { name: "3. Bent-Over Rear Delt Flyes", details: "3 Sets x 12 Reps", cue: "Hinge at hips, fly dumbbells wide with elbows soft to isolate upper back.", search: "Rear Delt Flyes" },
-              { name: "4. Mat Pilates V-Ups", details: "3 Sets x 12 Reps", cue: "Exhale as you peel your upper back off the mat and float striaght legs int a 'V' position.", search: "Pilates V-ups" }
-            ]
-          },
-          5: {
-            title: "Day 5 • Glute Medius & Burnout Conditioning",
-            tag: "Target: Glute Medius, Hip Abductors & Core",
-            note: "Target upper glute 'shelf' and hip stability to complement heavy compound lifting.",
-            exercises: [
-              { name: "1. Standing Cable Abduction", details: "4 Sets x 15 Reps per leg", cue: "Keep torso upright, kick leg out to 45 degrees, squeezing side glute.", search: "Cable Hip Abduction" },
-              { name: "2. B-stance Dumbbell Romanian Deadlift ", details: "3 Sets x 12 Reps", cue: "Start with one foot flat, the other resting on your toes. Hinge for hamstring stretch and drive hips forward.", search: "B-stance Dumbbell RDL" },
-              { name: "3. Seated Abduct Machine (Lean Forward)", details: "3 Sets x 20 Reps", cue: "Lean torso slightly forward against handles to emphasize upper glute max.", search: "Seated Abductor Machine" },
-              { name: "4. Pilates Saw & Swimming Circuit", details: "3 Sets x 10 Reps / 45 Secs", cue: "Rotate spine from waist in Saw; extend back line with controlled flutter kicks in Swimming.", search: "Pilates Saw and Swimming" }
-            ]
-          }
-        }
-      },
-      3: {
-        title: "Week 3 Blueprint: Hypertrophy & Time Under Tension",
-        days: {
-          1: {
-            title: "Day 1 • Glute & Hamstring Hypertrophy",
-            tag: "Target: Glutes & Hamstrings",
-            note: "Incorporate pause reps at peak contraction to maximize glute muscle fiber recruitment.",
-            exercises: [
-              { name: "1. Barbell Hip Thrust (2-Sec Pause)", details: "4 Sets x 10 Reps | 2s hold at top", cue: "Hold top extension for 2 full seconds; squeeze glutes violently without lumbar arch.", search: "Barbell Hip thrust" },
-              { name: "2. Single-Leg Dumbbell RDL", details: "3 Sets x 10 Reps per leg", cue: "Keep hips level, extend rear leg straight back, hinge until hamstrings stretch.", search: "Single Leg Dumbbell RDL" },
-              { name: "3. Bulgarian Split Squat (1.5 Reps)", details: "3 Sets x 8 Reps per leg", cue: "Go down, come up halfway, go back down, then stand fully for 1 complete rep.", search: "Bulgarian Split Squat" },
-              { name: "4. Smith Machine Goodmornings", details: "3 Sets x 12 Reps | Controlled Tempo", cue: "Brace core tightly, hinge at the hips while maintaining a flat back, and squeeze glutes at top.", search: "Smith machine goodmornings" }
-            ]
-          },
-          2: {
-            title: "Day 2 • Upper Sculpt & Pilates Core Precision",
-            tag: "Target: Delts, Lats & Transverse Abdominis",
-            note: "Focus on controlled 3-second lowering phase on all upper body pulls.",
-            exercises: [
-              { name: "1. Dumbbell Shoulder Press (3-1-1 Tempo)", details: "4 Sets x 10 Reps", cue: "Lower dumbbells over 3 seconds, pause at shoulder height, explode upward.", search: "Dumbbell Shoulder Press" },
-              { name: "2. Neutral Grip Lat Pulldown", details: "3 Sets x 10-12 Reps", cue: "Use V-bar handle; drive elbows straight down into ribs for lower lat sweep.", search: "Neutral Grip Lat Pulldown" },
-              { name: "3. Straight-Arm Cable Pulldown", details: "3 Sets x 12-15 Reps", cue: "Keep arms extended with soft elbow; pull bar to thighs using lat strength.", search: "Straight Arm Cable Pulldown" },
-              { name: "4. Pilates Praises", details: "3 Sets x 12-15 Reps", cue: "Sit tall with tailbone heavy, reach arms long overhead without shrugging shoulders, engaging mid-back and postural stabilizers.", search: "Pilates Praises" },
-              { name: "5. Mat Pilates Double Leg Stretch & Teaser", details: "3 Sets x 10 Reps Each", cue: "Maintain flat lumbar curve; sweep arms and legs open simultaneously with exhale.", search: "Pilates Teaser and Double Leg Stretch" }
-            ]
-          },
-          3: {
-            title: "Day 3 • Quads & Glute Hypertrophy Focus",
-            tag: "Target: Quads & Lower Body Strength",
-            note: "Push weight on compound squat while maintaining strict Pilates pelvic alignment.",
-            exercises: [
-              { name: "1. Barbell Back Squat", details: "4 Sets x 8 Reps | Heavy Focus", cue: "Maintain flat back, push knees out, drive out of bottom through whole foot.", search: "Barbell Back Squat" },
-              { name: "2. Dumbbell Step-Ups on Bench", details: "3 Sets x 10 Reps per leg", cue: "Step onto bench, drive through front heel, minimize pushing off rear leg.", search: "Dumbbell Step Ups" },
-              { name: "3. Leg Extension Machine (Pause Peak)", details: "3 Sets x 12-15 Reps", cue: "Pause for 1 second at full extension; lower slowly to build quad teardrop.", search: "Leg Extension Machine" },
-              { name: "4. Cable Glute Kickbacks (Diagonal Angle)", details: "3 Sets x 12-15 Reps per leg", cue: "Kick leg back at a 30-degree outward angle to engage both glute max and medius.", search: "Cable Glute Kickbacks" }
-            ]
-          },
-          4: {
-            title: "Day 4 • Upper Back Detail & Chest Openers",
-            tag: "Target: Upper Back, Rear Delts & Posture",
-            note: "Counteract desk posture by opening chest muscles and strengthening scapular retractors.",
-            exercises: [
-              { name: "1. Standing Barbell Overhead Press", details: "3 Sets x 8-10 Reps", cue: "Squeeze glutes and core to create solid base, press bar straight up overhead.", search: "Overhead Barbell Press" },
-              { name: "2. Single-Arm Cable Row (Rotational)", details: "3 Sets x 12 Reps per arm", cue: "Allow torso to rotate slightly forward stretch, then pull elbow back and rotate chest open.", search: "Single Arm Cable Row" },
-              { name: "3. Single-Arm Rear Delt Cable Flyes", details: "3 Sets x 15 Reps", cue: "Remove the handle and grip the cable stopper directly. Set the pulley so the cable pulls across the front of your body at shoulder level.", search: "Reverse Cable Flyes" },
-              { name: "4. Pilates Corkscrew & Swan Extension", details: "3 Sets x 8 Reps Each", cue: "Circle legs with pelvis stabilized; lift chest into extension using mid-back muscles.", search: "Pilates Corkscrew and Swan" }
-            ]
-          },
-          5: {
-            title: "Day 5 • Full Body Recomp & Glute Pump",
-            tag: "Target: Full Body Hypertrophy",
-            note: "Execute high repetitions to push muscular endurance and glute hypertrophy.",
-            exercises: [
-              { name: "1. Barbell Hip Thrust (Drop Set)", details: "3 Sets x 12 Reps + 8 Lighter Reps", cue: "Complete 12 heavy reps, remove 30% weight, immediately perform 8 more reps.", search: "Barbell Hip thrust" },
-              { name: "2. Kettlebell / Dumbbell Swings", details: "4 Sets x 15-20 Reps", cue: "Hinge at hips, drive hips forward to swing bell to chest height.", search: "Kettlebell Swing" },
-              { name: "3. Dumbbell Push Press to Squat", details: "3 Sets x 10-12 Reps", cue: "Squat down, drive through legs, and use momentum to press dumbbells overhead.", search: "Dumbbell Thruster" },
-              { name: "4. Pilates Scissors & Hip circles", details: "3 Sets x 1 min each movement", cue: "Pulse leg twice in scissors; Rotate legs awy from the body in a circular motion to switch which leg is pointed to the sky.", search: "Pilates Scissors & single-leg hip circles" }
-            ]
-          }
-        }
-      },
-      4: {
-        title: "Week 4 Blueprint: Recomp Peak & Maximum Precision",
-        days: {
-          1: {
-            title: "Day 1 • Glute & Hamstring Hypertrophy Peak",
-            tag: "Target: Peak Glute Hypertrophy",
-            note: "Final week peak weight targets. Record reps and weights to verify progressive overload.",
-            exercises: [
-              { name: "1. Barbell Hip Thrust", details: "4 Sets x 8-10 Reps | Peak Weight", cue: "Keep chin tucked toward chest, pelvic neutral, squeeze glutes at top without hyperextending back.", search: "Barbell Hip thrust" },
-              { name: "2. Romanian Deadlift (RDL)", details: "3 Sets x 10-12 Reps | Tempo: 3-1-1", cue: "Soft bend in knees, hinge hips straight back, keep lats engaged and bar close to shins.", search: "Romanian Deadlift" },
-              { name: "3. Bulgarian Split Squat", details: "3 Sets x 8-10 Reps per leg", cue: "Slight forward torso lean to target glute max; drive through front heel.", search: "Bulgarian Split Squat" },
-              { name: "4. Smith Machine Goodmornings", details: "3 Sets x 12 Reps | Controlled Tempo", cue: "Brace core tightly, hinge at the hips while maintaining a flat back, and squeeze glutes at top.", search: "Smith machine goodmornings" }
-            ]
-          },
-          2: {
-            title: "Day 2 • Upper Body Sculpt & Pilates Core",
-            tag: "Target: Upper Body Peak & Waist Taper",
-            note: "Maximum focus on posture, lat width, and waist tapering core movements.",
-            exercises: [
-              { name: "1. Dumbbell Shoulder Press", details: "4 Sets x 8-10 Reps", cue: "Keep elbows slightly turned inward, core braced tightly, lower dumbbells to ear level.", search: "Dumbbell Shoulder Press" },
-              { name: "2. Lat Pulldown (Pause Bottom)", details: "3 Sets x 10 Reps", cue: "Hold handle at chest for 1 second, squeezing lats before controlled return.", search: "Lat Pulldown" },
-              { name: "3. Seated Cable Row (Wide Grip)", details: "3 Sets x 12 Reps", cue: "Pull wide bar to upper abdomen, squeezing upper back and rear delts.", search: "Wide Grip Cable Row" },
-              { name: "4. Mat Pilates Core Peak (Hundred & Plank Flow)", details: "3 Sets x 100 Pulses / 60s Plank", cue: "Vigorous arm pumping in Hundred with legs at 45 degrees; hold solid plank.", search: "Pilates Hundred and Plank" }
-            ]
-          },
-          3: {
-            title: "Day 3 • Quads & Glute Hypertrophy Focus",
-            tag: "Target: Quads & Glute Max Peak",
-            note: "Focus on clean depth and controlled execution on all knee-dominant movements.",
-            exercises: [
-              { name: "1. Barbell Back Squat / Goblet Squat", details: "4 Sets x 8 Reps", cue: "Push knees outward in line with toes, maintain flat back and break 90-degree parallel.", search: "Barbell Back Squat" },
+              { name: "1. Barbell Back Squat / Goblet Squat", details: "4 Sets x 8-10 Reps", cue: "Push knees outward in line with toes, maintain flat back and break 90-degree parallel.", search: "Barbell Back Squat" },
               { name: "2. Dumbbell Walking Lunges", details: "3 Sets x 12 Reps per leg", cue: "Take long strides for glute focus or shorter strides for quad bias.", search: "Dumbbell Walking Lunges" },
               { name: "3. Leg Press (High & Wide Stance)", details: "3 Sets x 12-15 Reps", cue: "High/wide foot placement targets glutes and hamstrings; avoid locking knees at top.", search: "Leg Press high wide stance" },
-              { name: "4. Cable Glute Kickbacks", details: "3 Sets x 15 Reps per leg", cue: "Keep torso steady, squeeze glute at top extension without swinging upper body.", search: "Cable Glute Kickbacks" }
-            ]
-          },
-          4: {
-            title: "Day 4 • Upper Body Detail & Core Alignment",
-            tag: "Target: Shoulder Cap & Deep Core",
-            note: "Isolate shoulder deltoids and finish with Pilates transverse abdominis control.",
-            exercises: [ 
-              { name: "1. Bent-Over Rear Dealt Flyes", details: "3 Sets x 12 Reps", cue: "Hinge at the hips with a flat back. Fly the dumbbells out laterally with a slight bend in the elbows.", search: "Bent-Over Rear Delt Flyes" },
-              { name: "2. Cable Lateral Raises", details: "3 Sets x 12-15 Reps per arm", cue: "Pull cable across front of body, raise arm out to side to shoulder height.", search: "Cable Lateral Raise" },
-              { name: "3. Dumbbell Hammer Curls to Triceps Extensions", details: "3 Sets x 12 Reps", cue: "Keep elbows fixed to ribs on curls and overhead extensions.", search: "Dumbbell Hammer Curl to Tricep Extension" },
-              { name: "4. Pilates Kneeling Side Kicks", details: "3 Sets x 10 Reps per side", cue: "Kneel on one knee, hand on mat, extend top leg and sweep forward/back with stable torso.", search: "Pilates Kneeling Side Kicks" }
-            ]
-          },
-          5: {
-            title: "Day 5 • Full Program Recomp Finale & Glute Pump",
-            tag: "Target: Program Finale Full Body Burnout",
-            note: "Final session of the 4-week blueprint! Push intensity and celebrate your recomposition progress.",
-            exercises: [
-              { name: "1. Barbell Hip Thrust", details: "4 Sets x 10 Reps | Final Peak", cue: "Drive through heels, squeeze glutes at top with maximum force.", search: "Barbell Hip thrust" },
-              { name: "2. Romanian Deadlift (RDL)", details: "3 Sets x 10 Reps", cue: "Hinge hips back, feel full hamstring stretch, snap hips forward.", search: "Romanian Deadlift" },
-              { name: "3. Dumbbell Goblet Squat", details: "3 Sets x 12 Reps", cue: "Hold weight at chest, drop into deep squat, explode up.", search: "Dumbbell Goblet Squat" },
-              { name: "4. Mat Pilates Full Body Mobility Flow", details: "20 Mins Mobility Flow", cue: "Perform pelvic tilts, cat-cow, spine twist, and hip openers for full recovery.", search: "Mat Pilates Mobility Flow" }
+              { name: "4. Romanian Deadlift (RDL)", details: "3 Sets x 10-12 Reps | Tempo: 3-1-1", cue: "Soft bend in knees, hinge hips straight back, keep lats engaged and bar close to shins.", search: "Romanian Deadlift" }
             ]
           }
         }
       }
     };
-
-    let currentSelectedWeek = 1;
-    let currentSelectedDay = 1;
 
     function initDripLockSystem() {
       let startDateStr = localStorage.getItem('gymbaby_start_date');
@@ -724,15 +626,13 @@ function calculateMacros() {
       const diffTime = Math.abs(today - startDate);
       const activeDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
 
-      // Calculate accessible weeks based on active days
       const weekUnlocks = {
-        1: true,                     // Week 1 unlocked on Day 1
-        2: activeDays >= 8,          // Week 2 unlocks on Day 8
-        3: activeDays >= 15,         // Week 3 unlocks on Day 15
-        4: activeDays >= 22          // Week 4 unlocks on Day 22
+        1: true,
+        2: activeDays >= 8,
+        3: activeDays >= 15,
+        4: activeDays >= 22
       };
 
-      // Determine highest available week to highlight
       let highestWeek = 1;
       for (let w = 4; w >= 1; w--) {
         if (weekUnlocks[w]) {
@@ -741,88 +641,34 @@ function calculateMacros() {
         }
       }
 
-      // Update UI Header Stats
       document.getElementById('stat-current-week').innerText = 'Week ' + highestWeek;
       document.getElementById('stat-days-active').innerText = 'Day ' + activeDays + ' Active';
 
-      // Update Button States
       for (let w = 1; w <= 4; w++) {
         const btn = document.getElementById('btn-week-' + w);
-        if (weekUnlocks[w]) {
-          btn.disabled = false;
-          btn.classList.remove('cursor-not-allowed', 'opacity-50');
-          btn.innerText = 'Week ' + w;
-          if (w === 1) {
-            btn.className = "bg-pink-400 text-slate-950 text-xs font-bold px-4 py-2 rounded-lg transition cursor-pointer";
-          } else {
-            btn.className = "bg-slate-900 text-pink-300 border border-pink-400/50 text-xs font-bold px-4 py-2 rounded-lg transition hover:bg-pink-500/20 cursor-pointer";
-          }
-        } else {
-          btn.disabled = true;
-          let daysLeft = (w === 2 ? 8 : w === 3 ? 15 : 22) - activeDays;
-          btn.innerHTML = `<i class="fa-solid fa-lock mr-1"></i> Week ${w} (${daysLeft}d left)`;
-          btn.className = "bg-slate-900 text-slate-500 text-xs font-bold px-4 py-2 rounded-lg border border-pink-500/10 cursor-not-allowed opacity-60";
-        }
-      }
-
-     // -------------------------------------------------------------
-    // EXERCISE CHECKBOX & COMPLETION TRACKING LOGIC
-    // -------------------------------------------------------------
-
-    // Helper: Load checked exercises from localStorage
-    function getCompletedExercises() {
-      const saved = localStorage.getItem('gymbaby_completed_exercises');
-      return saved ? JSON.parse(saved) : {};
-    }
-
-    // Toggle exercise completion state
-    function toggleExercise(weekNum, dayNum, exerciseIndex) {
-      const completed = getCompletedExercises();
-      const key = `w${weekNum}_d${dayNum}_e${exerciseIndex}`;
-
-      completed[key] = !completed[key];
-      localStorage.setItem('gymbaby_completed_exercises', JSON.stringify(completed));
-
-      // Re-render UI and update stats
-      selectWeek(weekNum, dayNum);
-      updateCompletionStats();
-    }
-
-    // Calculate & update overall program completion rate percentage
-    function updateCompletionStats() {
-      const completed = getCompletedExercises();
-      let totalExercises = 0;
-      let completedCount = 0;
-
-      // Count total exercises across all available weeks/days
-      Object.keys(workoutData).forEach(wKey => {
-        const week = workoutData[wKey];
-        if (week.days) {
-          Object.keys(week.days).forEach(dKey => {
-            const day = week.days[dKey];
-            if (day.exercises) {
-              day.exercises.forEach((ex, exIdx) => {
-                totalExercises++;
-                if (completed[`w${wKey}_d${dKey}_e${exIdx}`]) {
-                  completedCount++;
-                }
-              });
+        if (btn) {
+          if (weekUnlocks[w]) {
+            btn.disabled = false;
+            btn.classList.remove('cursor-not-allowed', 'opacity-50');
+            btn.innerText = 'Week ' + w;
+            if (w === 1) {
+              btn.className = "bg-pink-400 text-slate-950 text-xs font-bold px-4 py-2 rounded-lg transition cursor-pointer";
+            } else {
+              btn.className = "bg-slate-900 text-pink-300 border border-pink-400/50 text-xs font-bold px-4 py-2 rounded-lg transition hover:bg-pink-500/20 cursor-pointer";
             }
-          });
+          } else {
+            btn.disabled = true;
+            let daysLeft = (w === 2 ? 8 : w === 3 ? 15 : 22) - activeDays;
+            btn.innerHTML = `<i class="fa-solid fa-lock mr-1"></i> Week ${w} (${daysLeft}d left)`;
+            btn.className = "bg-slate-900 text-slate-500 text-xs font-bold px-4 py-2 rounded-lg border border-pink-500/10 cursor-not-allowed opacity-60";
+          }
         }
-      });
-
-      const percentage = totalExercises > 0 ? Math.round((completedCount / totalExercises) * 100) : 0;
-      
-      const statElem = document.getElementById('stat-completion');
-      if (statElem) {
-        statElem.innerText = `${percentage}%`;
       }
+
+      selectWeek(1, 1);
     }
 
-    // Render current week & day workout cards with interactive checkboxes
     function selectWeek(weekNum, selectedDay = 1) {
-      // Highlight active week button
       for (let w = 1; w <= 4; w++) {
         const btn = document.getElementById('btn-week-' + w);
         if (btn && !btn.disabled) {
@@ -838,7 +684,6 @@ function calculateMacros() {
       const container = document.getElementById('workout-display-container');
       const completedMap = getCompletedExercises();
 
-      // Sub-Navigation Bar for Days 1 through 5
       let dayNavHtml = '<div class="flex flex-wrap gap-2 border-b border-pink-500/10 pb-3 mb-4">';
       for (let d = 1; d <= 5; d++) {
         const isDayActive = d === selectedDay;
@@ -858,42 +703,45 @@ function calculateMacros() {
       };
 
       let exercisesHtml = '';
-      currentDayData.exercises.forEach((ex, exIdx) => {
-        const exKey = `w${weekNum}_d${selectedDay}_e${exIdx}`;
-        const isChecked = !!completedMap[exKey];
+      if (currentDayData.exercises && currentDayData.exercises.length > 0) {
+        currentDayData.exercises.forEach((ex, exIdx) => {
+          const exKey = `w${weekNum}_d${selectedDay}_e${exIdx}`;
+          const isChecked = !!completedMap[exKey];
 
-        exercisesHtml += `
-          <div class="bg-cardbg rounded-lg p-3 border ${isChecked ? 'border-pink-400/60 bg-pink-500/5' : 'border-pink-500/10'} space-y-2 transition-all">
-            <div class="flex justify-between items-start gap-3">
-              <div class="flex items-start gap-3">
-                <!-- Checkbox -->
-                <input 
-                  type="checkbox" 
-                  id="${exKey}" 
-                  ${isChecked ? 'checked' : ''} 
-                  onchange="toggleExercise(${weekNum}, ${selectedDay}, ${exIdx})"
-                  class="mt-1 w-4 h-4 accent-pink-400 cursor-pointer rounded border-slate-700 focus:ring-pink-400"
-                >
-                <div>
-                  <label for="${exKey}" class="font-semibold ${isChecked ? 'line-through text-slate-400' : 'text-pink-300'} text-sm cursor-pointer">
-                    ${ex.name}
-                  </label>
-                  <p class="text-xs text-slate-400">${ex.details}</p>
+          exercisesHtml += `
+            <div class="bg-cardbg rounded-lg p-3 border ${isChecked ? 'border-pink-400/60 bg-pink-500/5' : 'border-pink-500/10'} space-y-2 transition-all">
+              <div class="flex justify-between items-start gap-3">
+                <div class="flex items-start gap-3">
+                  <input 
+                    type="checkbox" 
+                    id="${exKey}" 
+                    ${isChecked ? 'checked' : ''} 
+                    onchange="toggleExercise(${weekNum}, ${selectedDay}, ${exIdx})"
+                    class="mt-1 w-4 h-4 accent-pink-400 cursor-pointer rounded border-slate-700 focus:ring-pink-400"
+                  >
+                  <div>
+                    <label for="${exKey}" class="font-semibold ${isChecked ? 'line-through text-slate-400' : 'text-pink-300'} text-sm cursor-pointer">
+                      ${ex.name}
+                    </label>
+                    <p class="text-xs text-slate-400">${ex.details}</p>
+                  </div>
                 </div>
+
+                <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(ex.search)}" target="_blank" class="text-xs bg-pink-500/20 text-pink-300 border border-pink-400/30 px-2 py-1 rounded hover:bg-pink-500/30 transition flex items-center gap-1 shrink-0">
+                  <i class="fa-brands fa-youtube text-red-400"></i> Watch Demo
+                </a>
               </div>
 
-              <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(ex.search)}" target="_blank" class="text-xs bg-pink-500/20 text-pink-300 border border-pink-400/30 px-2 py-1 rounded hover:bg-pink-500/30 transition flex items-center gap-1 shrink-0">
-                <i class="fa-brands fa-youtube text-red-400"></i> Watch Demo
-              </a>
+              <div class="bg-slate-900/60 p-2 rounded text-[11px] text-pink-200/90 border border-pink-500/10">
+                <span class="font-bold text-pink-300">Insider Tips & Tricks:</span> ${ex.cue} <br>
+                <span class="font-semibold text-slate-400">Coach Note:</span> search: ${ex.search}
+              </div>
             </div>
-
-            <div class="bg-slate-900/60 p-2 rounded text-[11px] text-pink-200/90 border border-pink-500/10">
-              <span class="font-bold text-pink-300">Insider Tips & Tricks:</span> ${ex.cue} <br>
-              <span class="font-semibold text-slate-400">Coach Note:</span> search: ${ex.search}
-            </div>
-          </div>
-        `;
-      });
+          `;
+        });
+      } else {
+        exercisesHtml = `<p class="text-xs text-slate-400 italic">No exercises logged for this day yet.</p>`;
+      }
 
       container.innerHTML = `
         <div class="bg-slate-900 border border-pink-500/20 rounded-xl p-4 space-y-4">
@@ -911,78 +759,12 @@ function calculateMacros() {
       `;
     }
 
-      // Default to Day 1 on week change
-      renderWorkoutDay(weekNum, 1);
-    }
+    // Chart.js Init & Onload Setup
+    window.onload = function() {
+      calculateMacros();
+      initDripLockSystem();
+      updateCompletionStats();
 
-    function renderWorkoutDay(weekNum, dayNum) {
-      currentSelectedWeek = weekNum;
-      currentSelectedDay = dayNum;
-      const weekInfo = workoutData[weekNum] || workoutData[1];
-      const dayData = weekInfo.days[dayNum] || weekInfo.days[1];
-      const container = document.getElementById('workout-display-container');
-
-      // Build Day Navigation Buttons (Days 1 to 5)
-      let dayButtonsHtml = '<div class="flex flex-wrap gap-2 mb-4 border-b border-pink-500/10 pb-3">';
-      for (let d = 1; d <= 5; d++) {
-        const isActive = d === dayNum;
-        const btnClass = isActive 
-          ? "bg-pink-400 text-slate-950 text-xs font-bold px-3 py-1.5 rounded-md transition cursor-pointer" 
-          : "bg-slate-800 text-pink-300 border border-pink-500/20 text-xs font-semibold px-3 py-1.5 rounded-md transition hover:bg-pink-500/20 cursor-pointer";
-        
-        dayButtonsHtml += `
-          <button onclick="renderWorkoutDay(${weekNum}, ${d})" class="${btnClass}">
-            Day ${d}
-          </button>
-        `;
-      }
-      dayButtonsHtml += '</div>';
-
-      // Build Exercise Cards HTML
-      let exercisesHtml = '';
-      dayData.exercises.forEach(ex => {
-        exercisesHtml += `
-          <div class="bg-cardbg rounded-lg p-3 border border-pink-500/10 space-y-2">
-            <div class="flex justify-between items-start">
-              <div>
-                <h4 class="font-semibold text-pink-300 text-sm">${ex.name}</h4>
-                <p class="text-xs text-slate-400">${ex.details}</p>
-              </div>
-              <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(ex.search)}" target="_blank" class="text-xs bg-pink-500/20 text-pink-300 border border-pink-400/30 px-2 py-1 rounded hover:bg-pink-500/30 transition flex items-center gap-1">
-                <i class="fa-brands fa-youtube text-red-400"></i> Watch Demo
-              </a>
-            </div>
-            <div class="bg-slate-900/60 p-2 rounded text-[11px] text-pink-200/90 border border-pink-500/10">
-              <span class="font-bold text-pink-300">Insider Tips & Tricks:</span> ${ex.cue} <br>
-              <span class="font-semibold text-slate-400">Coach Note:</span> search: ${ex.search}
-            </div>
-          </div>
-        `;
-      });
-
-      container.innerHTML = `
-        <div class="bg-slate-900 border border-pink-500/20 rounded-xl p-4 space-y-4">
-          <div class="flex justify-between items-center border-b border-pink-500/10 pb-3">
-            <div>
-              <span class="text-xs text-pink-300 font-bold uppercase">Week ${weekNum} • ${weekInfo.title}</span>
-              <h3 class="text-lg font-bold text-white mt-1">${dayData.title}</h3>
-            </div>
-            <span class="text-xs bg-pink-500/20 text-pink-300 px-3 py-1 rounded-full border border-pink-400/30">${dayData.tag}</span>
-          </div>
-          
-          ${dayButtonsHtml}
-
-          <p class="text-xs text-slate-400">${dayData.note}</p>
-          ${exercisesHtml}
-        </div>
-      `;
-    }
-
-    // Chart.js Init
- window.onload = function() {
-  calculateMacros();
-  initDripLockSystem();
-  updateCompletionStats();
       const ctx = document.getElementById('recompChart').getContext('2d');
       new Chart(ctx, {
         type: 'line',
