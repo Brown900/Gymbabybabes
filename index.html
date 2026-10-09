@@ -979,10 +979,10 @@ function calculateMacros() {
     }
 
     // Chart.js Init
-    window.onload = function() {
-      calculateMacros();
-      initDripLockSystem();
-
+ window.onload = function() {
+  calculateMacros();
+  initDripLockSystem();
+  updateCompletionStats();
       const ctx = document.getElementById('recompChart').getContext('2d');
       new Chart(ctx, {
         type: 'line',
