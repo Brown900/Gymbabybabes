@@ -538,7 +538,7 @@
     }
 
     // -------------------------------------------------------------
-    // WORKOUT DATA STRUCTURE (WEEKS 1 & 2)
+    // WORKOUT DATA STRUCTURE (WEEKS 1 & 2 FULL 5-DAY ROUTING)
     // -------------------------------------------------------------
     const workoutData = {
       1: {
@@ -687,4 +687,192 @@
             btn.disabled = true;
             let daysLeft = (w === 2 ? 8 : w === 3 ? 15 : 22) - activeDays;
             btn.innerHTML = `<i class="fa-solid fa-lock mr-1"></i> Week ${w} (${daysLeft}d left)`;
-            btn.className = "bg-slate-900 text-slate-500 text-xs font-bold px
+            btn.className = "bg-slate-900 text-slate-500 text-xs font-bold px-4 py-2 rounded-lg border border-pink-500/10 cursor-not-allowed opacity-60";
+          }
+        }
+      }
+
+      selectWeek(1, 1);
+    }
+
+    function selectWeek(weekNum, selectedDay = 1) {
+      for (let w = 1; w <= 4; w++) {
+        const btn = document.getElementById('btn-week-' + w);
+        if (btn && !btn.disabled) {
+          if (w === weekNum) {
+            btn.className = "bg-pink-400 text-slate-950 text-xs font-bold px-4 py-2 rounded-lg transition cursor-pointer";
+          } else {
+            btn.className = "bg-slate-900 text-pink-300 border border-pink-400/50 text-xs font-bold px-4 py-2 rounded-lg transition hover:bg-pink-500/20 cursor-pointer";
+          }
+        }
+      }
+
+      const weekInfo = workoutData[weekNum] || workoutData[1];
+      const container = document.getElementById('workout-display-container');
+      const completedMap = getCompletedExercises();
+
+      let dayNavHtml = '<div class="flex flex-wrap gap-2 border-b border-pink-500/10 pb-3 mb-4">';
+      for (let d = 1; d <= 5; d++) {
+        const isDayActive = d === selectedDay;
+        const dayClass = isDayActive
+          ? "bg-pink-500/20 text-pink-300 border border-pink-400/50 font-bold px-3 py-1.5 rounded-lg text-xs"
+          : "bg-slate-900 text-slate-400 border border-pink-500/10 hover:text-pink-300 px-3 py-1.5 rounded-lg text-xs transition cursor-pointer";
+        
+        dayNavHtml += `<button onclick="selectWeek(${weekNum}, ${d})" class="${dayClass}">Day ${d}</button>`;
+      }
+      dayNavHtml += '</div>';
+
+      const currentDayData = (weekInfo.days && weekInfo.days[selectedDay]) ? weekInfo.days[selectedDay] : {
+        title: `Day ${selectedDay} • Active Training`,
+        tag: "Recomp Focus",
+        note: "Follow form cues and log completed sets.",
+        exercises: []
+      };
+
+      let exercisesHtml = '';
+      if (currentDayData.exercises && currentDayData.exercises.length > 0) {
+        currentDayData.exercises.forEach((ex, exIdx) => {
+          const exKey = `w${weekNum}_d${selectedDay}_e${exIdx}`;
+          const isChecked = !!completedMap[exKey];
+
+          exercisesHtml += `
+            <div class="bg-cardbg rounded-lg p-3 border ${isChecked ? 'border-pink-400/60 bg-pink-500/5' : 'border-pink-500/10'} space-y-2 transition-all">
+              <div class="flex justify-between items-start gap-3">
+                <div class="flex items-start gap-3">
+                  <input 
+                    type="checkbox" 
+                    id="${exKey}" 
+                    ${isChecked ? 'checked' : ''} 
+                    onchange="toggleExercise(${weekNum}, ${selectedDay}, ${exIdx})"
+                    class="mt-1 w-4 h-4 accent-pink-400 cursor-pointer rounded border-slate-700 focus:ring-pink-400"
+                  >
+                  <div>
+                    <label for="${exKey}" class="font-semibold ${isChecked ? 'line-through text-slate-400' : 'text-pink-300'} text-sm cursor-pointer">
+                      ${ex.name}
+                    </label>
+                    <p class="text-xs text-slate-400">${ex.details}</p>
+                  </div>
+                </div>
+
+                <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(ex.search)}" target="_blank" class="text-xs bg-pink-500/20 text-pink-300 border border-pink-400/30 px-2 py-1 rounded hover:bg-pink-500/30 transition flex items-center gap-1 shrink-0">
+                  <i class="fa-brands fa-youtube text-red-400"></i> Watch Demo
+                </a>
+              </div>
+
+              <div class="bg-slate-900/60 p-2 rounded text-[11px] text-pink-200/90 border border-pink-500/10">
+                <span class="font-bold text-pink-300">Insider Tips & Tricks:</span> ${ex.cue} <br>
+                <span class="font-semibold text-slate-400">Coach Note:</span> search: ${ex.search}
+              </div>
+            </div>
+          `;
+        });
+      } else {
+        exercisesHtml = `<p class="text-xs text-slate-400 italic">No exercises logged for this day yet.</p>`;
+      }
+
+      container.innerHTML = `
+        <div class="bg-slate-900 border border-pink-500/20 rounded-xl p-4 space-y-4">
+          ${dayNavHtml}
+          <div class="flex justify-between items-center border-b border-pink-500/10 pb-3">
+            <div>
+              <span class="text-xs text-pink-300 font-bold uppercase">Week ${weekNum} • ${currentDayData.title}</span>
+              <h3 class="text-lg font-bold text-white mt-0.5">${currentDayData.title}</h3>
+            </div>
+            <span class="text-xs bg-pink-500/20 text-pink-300 px-3 py-1 rounded-full border border-pink-400/30">${currentDayData.tag}</span>
+          </div>
+          <p class="text-xs text-slate-400">${currentDayData.note}</p>
+          ${exercisesHtml}
+        </div>
+      `;
+    }
+
+    // -------------------------------------------------------------
+    // RECOMP PROGRESS MEASUREMENT LOGIC & CHART.JS INIT
+    // -------------------------------------------------------------
+    let recompChartInstance = null;
+
+    function getSavedProgressData() {
+      const saved = localStorage.getItem('gymbaby_progress_metrics');
+      if (saved) {
+        return JSON.parse(saved);
+      }
+      return {
+        weights: [140, 139.2, 138.8, 138.0],
+        waists: [28.0, 27.5, 27.2, 26.8]
+      };
+    }
+
+    function saveWeeklyMeasurements() {
+      const weekIndex = parseInt(document.getElementById('log-week-select').value, 10);
+      const weightVal = parseFloat(document.getElementById('log-weight-input').value);
+      const waistVal = parseFloat(document.getElementById('log-waist-input').value);
+
+      const currentData = getSavedProgressData();
+
+      if (!isNaN(weightVal)) {
+        currentData.weights[weekIndex] = weightVal;
+      }
+      if (!isNaN(waistVal)) {
+        currentData.waists[weekIndex] = waistVal;
+      }
+
+      localStorage.setItem('gymbaby_progress_metrics', JSON.stringify(currentData));
+
+      if (recompChartInstance) {
+        recompChartInstance.data.datasets[0].data = currentData.weights;
+        recompChartInstance.data.datasets[1].data = currentData.waists;
+        recompChartInstance.update();
+      }
+
+      document.getElementById('log-weight-input').value = '';
+      document.getElementById('log-waist-input').value = '';
+    }
+
+    window.onload = function() {
+      calculateMacros();
+      initDripLockSystem();
+      updateCompletionStats();
+
+      const progressData = getSavedProgressData();
+      const ctx = document.getElementById('recompChart').getContext('2d');
+      
+      recompChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+          datasets: [
+            {
+              label: 'Weight (lbs)',
+              data: progressData.weights,
+              borderColor: '#f9a8d4',
+              backgroundColor: 'rgba(249, 168, 212, 0.1)',
+              tension: 0.3,
+              yAxisID: 'y'
+            },
+            {
+              label: 'Waist (in)',
+              data: progressData.waists,
+              borderColor: '#14b8a6',
+              backgroundColor: 'rgba(20, 184, 166, 0.1)',
+              tension: 0.3,
+              yAxisID: 'y1'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(249, 168, 212, 0.05)' } },
+            y: { position: 'left', ticks: { color: '#f9a8d4' }, grid: { color: 'rgba(249, 168, 212, 0.05)' } },
+            y1: { position: 'right', ticks: { color: '#14b8a6' }, grid: { drawOnChartArea: false } }
+          },
+          plugins: {
+            legend: { labels: { color: '#f8fafc' } }
+          }
+        }
+      });
+    };
+  </script>
+</body>
+</html>
